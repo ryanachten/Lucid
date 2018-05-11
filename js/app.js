@@ -5,10 +5,15 @@ const initMedia = new Promise(function(resolve, reject) {
     const video = document.createElement('video');
     const videoSize = 128;
     video.width = video.height = videoSize;
-    // document.querySelector('body').appendChild(video);
+    document.querySelector('body').appendChild(video);
 
     const constraints = {
-      video: {width: videoSize, height: videoSize},
+      video: {
+        // Makes sure video size is square for webgl tiling
+        width: videoSize, height: videoSize,
+        // Makes sure back cam is used
+        facingMode: "environment"
+      },
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
