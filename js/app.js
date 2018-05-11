@@ -20,10 +20,31 @@ const initMedia = new Promise(function(resolve, reject) {
 
     navigator.mediaDevices.getUserMedia(constraints)
       .then((stream) => {
+        // Assign stream to video src
         video.srcObject = stream;
+
+        // Request browser to go fullscreen
+        const fullscreenButton = document.querySelector('.fullscreen');
+        fullscreenButton.addEventListener("click", toggleFullScreen, false);
+
         resolve(video);
       });
   });
+
+function toggleFullScreen() {
+    var doc = window.document;
+    var docEl = doc.documentElement;
+
+    var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+    if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+      requestFullScreen.call(docEl);
+    }
+    else {
+      cancelFullScreen.call(doc);
+  }
+}
 
 const initThree = function (video) {
   return new Promise(function(resolve, reject) {
@@ -53,6 +74,8 @@ const initThree = function (video) {
     effect = new THREE.StereoEffect( renderer );
     // camera.position.z = 5;
 
+    window.addEventListener( 'resize', onWindowResize, false );
+
     resolve();
   });
 }
@@ -68,6 +91,15 @@ function animate() {
 
 	effect.render(scene, camera);
 };
+
+function onWindowResize(){
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
 
 // animate();
 (function(){
