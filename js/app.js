@@ -3,8 +3,9 @@ let cube, renderer, scene, camera, texture, effect;
 const initMedia = new Promise(function(resolve, reject) {
 
     const video = document.createElement('video');
-    const videoSize = 256;
+    const videoSize = 128;
     video.width = video.height = videoSize;
+    // document.querySelector('body').appendChild(video);
 
     const constraints = {
       video: {width: videoSize, height: videoSize},
