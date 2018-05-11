@@ -5,7 +5,9 @@ const initMedia = new Promise(function(resolve, reject) {
     const video = document.createElement('video');
     const videoSize = 128;
     video.width = video.height = videoSize;
-    document.querySelector('body').appendChild(video);
+
+    // Uncomment to see video feed
+    // document.querySelector('body').appendChild(video);
 
     const constraints = {
       video: {
@@ -61,8 +63,8 @@ function animate() {
 
 	cube.rotation.x += 0.001;
 	cube.rotation.y += 0.001;
-  texture.offset.x -= 0.001;
-  texture.offset.y -= 0.001;
+  texture.offset.x -= 0.01;
+  texture.offset.y -= 0.01;
 
 	effect.render(scene, camera);
 };
