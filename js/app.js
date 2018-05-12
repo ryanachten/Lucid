@@ -31,20 +31,8 @@ const initMedia = new Promise(function(resolve, reject) {
         // Add device rotation tracking
         window.addEventListener("deviceorientation", getDeviceOrientation, true);
 
-        // Lock screen to landscape``
-        // screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-        // ScreenOrientation.lock('landscape-primary');
-        console.log(ScreenOrientation);
-
-        if (ScreenOrientation.lock) {
-          if (ScreenOrientation.lock('landscape-primary')) {
-            // orientation was locked
-            console.log('screen locked');
-          } else {
-            // orientation lock failed
-            console.log('screen did not lock');
-          }
-        }
+        // Lock screen to landscape
+        screen.orientation.lock('landscape-primary');
 
 
         resolve(video);
@@ -133,9 +121,9 @@ function animate() {
     // cube.material.color.g = (gamma * (180/Math.PI)) /360;
     // cube.material.color.b = (alpha * (180/Math.PI)) /360;
 
-    cube.rotation.z = beta;
+    cube.rotation.x = alpha;
     // cube.rotation.y = gamma;
-    // cube.rotation.z = beta;
+    // cube.rotation.z = beta; //works!
   }
 
 
