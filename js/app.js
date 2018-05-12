@@ -116,14 +116,15 @@ function animate() {
     const gamma = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
-    console.log('x', alpha * (180/Math.PI));
+    console.log('x', gamma * (180/Math.PI));
     // console.log('y', gamma * (180/Math.PI));
     // console.log('z', alpha * (180/Math.PI));
 
-    cube.material.color.g = (alpha * (180/Math.PI)) /360;
+    cube.material.color.g = (gamma * (180/Math.PI)) /360;
 
-    cube.rotation.y = alpha;
-    // cube.rotation.y = gamma;
+
+    cube.rotation.x = gamma;
+    // cube.rotation.y = alpha; //works!
     // cube.rotation.z = beta; //works!
   }
 
