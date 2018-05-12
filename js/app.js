@@ -33,14 +33,18 @@ const initMedia = new Promise(function(resolve, reject) {
 
         // Lock screen to landscape``
         screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+        console.log(screen.lockOrientationUniversal);
 
-        if (screen.lockOrientationUniversal("landscape")) {
-          // orientation was locked
-          console.log('screen locked');
-        } else {
-          // orientation lock failed
-          console.log('screen did not lock');
+        if (screen.lockOrientationUniversal) {
+          if (screen.lockOrientationUniversal("landscape")) {
+            // orientation was locked
+            console.log('screen locked');
+          } else {
+            // orientation lock failed
+            console.log('screen did not lock');
+          }
         }
+
 
         resolve(video);
       });
