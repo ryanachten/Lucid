@@ -48,12 +48,12 @@ function toggleFullScreen() {
       requestFullScreen.call(docEl);
 
       // Lock screen to landscape
-      screen.orientation.lock('landscape-primary');
+      window.screen.orientation.lock('landscape-primary');
     }
     // Cancel full screen
     else {
       cancelFullScreen.call(doc);
-      screen.orientation.unlockOrientation();
+      window.screen.unlockOrientation();
   }
 }
 
