@@ -112,8 +112,8 @@ function animate() {
 
   // Assign shape rotation radians to device rotation degrees
   if (orientation.absolute) {
-    const beta = (orientation.beta+180) * (Math.PI / 180); //range: -180 -> 180
-    const gamma = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
+    const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180 //(orientation.beta+180)
+    const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90 //((orientation.gamma+90)*2)
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
     console.log('x', gamma * (180/Math.PI));
