@@ -115,8 +115,8 @@ function animate() {
   }
 
 
-  // texture.offset.x -= 0.01;
-  // texture.offset.y -= 0.01;
+  texture.offset.x -= 0.01;
+  texture.offset.y -= 0.01;
 
 	effect.render(scene, camera);
 };
