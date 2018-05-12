@@ -28,7 +28,19 @@ const initMedia = new Promise(function(resolve, reject) {
         const fullscreenButton = document.querySelector('.fullscreen');
         fullscreenButton.addEventListener("click", toggleFullScreen, false);
 
+        // Add device rotation tracking
         window.addEventListener("deviceorientation", getDeviceOrientation, true);
+
+        // Lock screen to landscape``
+        screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+
+        if (screen.lockOrientationUniversal("landscape")) {
+          // orientation was locked
+          console.log('screen locked');
+        } else {
+          // orientation lock failed
+          console.log('screen did not lock');
+        }
 
         resolve(video);
       });
