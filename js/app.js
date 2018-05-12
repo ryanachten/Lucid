@@ -78,7 +78,8 @@ const initThree = function (video) {
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
     material.map = texture;
 
-    const geometry = new THREE.SphereGeometry( 1, 25, 25);
+    // const geometry = new THREE.SphereGeometry( 1, 25, 25);
+    const geometry = new THREE.BoxGeometry( 1, 1, 1);
     cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     effect = new THREE.StereoEffect( renderer );
