@@ -27,6 +27,8 @@ const initMedia = new Promise(function(resolve, reject) {
         const fullscreenButton = document.querySelector('.fullscreen');
         fullscreenButton.addEventListener("click", toggleFullScreen, false);
 
+        window.addEventListener("deviceorientation", getDeviceOrientation, true);
+
         resolve(video);
       });
   });
@@ -44,6 +46,18 @@ function toggleFullScreen() {
     else {
       cancelFullScreen.call(doc);
   }
+}
+
+function getDeviceOrientation(event) {
+  var absolute = event.absolute;
+  var alpha    = event.alpha;
+  var beta     = event.beta;
+  var gamma    = event.gamma;
+
+  console.log('absolute', absolute);
+  console.log('alpha', alpha);
+  console.log('beta', beta);
+  console.log('gamma', gamma);
 }
 
 const initThree = function (video) {
@@ -84,10 +98,10 @@ const initThree = function (video) {
 function animate() {
 	requestAnimationFrame( animate );
 
-	cube.rotation.x += 0.001;
-	cube.rotation.y += 0.001;
-  texture.offset.x -= 0.01;
-  texture.offset.y -= 0.01;
+	// cube.rotation.x += 0.001;
+	// cube.rotation.y += 0.001;
+  // texture.offset.x -= 0.01;
+  // texture.offset.y -= 0.01;
 
 	effect.render(scene, camera);
 };
