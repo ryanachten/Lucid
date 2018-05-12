@@ -104,9 +104,9 @@ function animate() {
     console.log('gamma', gamma);
     console.log('alpha', alpha);
 
-    cube.rotation.x
-    cube.rotation.y
-    cube.rotation.z
+    cube.rotation.x = beta;
+    cube.rotation.y = gamma;
+    cube.rotation.z = alpha;
   }
 
 
