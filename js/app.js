@@ -118,7 +118,7 @@ function animate() {
 
     cube.rotation.x = beta;
     // cube.rotation.y = gamma;
-    // cube.rotation.z = alpha;
+    // cube.rotation.z = beta;
   }
 
 
