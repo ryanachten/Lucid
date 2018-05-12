@@ -95,9 +95,20 @@ function animate() {
 	requestAnimationFrame( animate );
 
   // Assign shape rotation radians to device rotation degrees
-	cube.rotation.x = (orientation.beta+180) * (Math.PI / 180); //range: -180 -> 180
-	cube.rotation.y = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
-  cube.rotation.z = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
+  if (orientation.absolute) {
+    const beta = (orientation.beta+180) * (Math.PI / 180); //range: -180 -> 180
+    const gamma = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
+    const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
+
+    console.log('beta', beta);
+    console.log('gamma', gamma);
+    console.log('alpha', alpha);
+
+    cube.rotation.x
+    cube.rotation.y
+    cube.rotation.z
+  }
+
 
   // texture.offset.x -= 0.01;
   // texture.offset.y -= 0.01;
