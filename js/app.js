@@ -123,9 +123,9 @@ function animate() {
     cube.material.color.g = (gamma * (180/Math.PI)) /360;
 
 
-    // cube.rotation.x = gamma; //works!
-    cube.rotation.y = alpha; //works!
-    // cube.rotation.z = beta; //works!
+    cube.rotation.x = gamma;
+    cube.rotation.y = alpha;
+    cube.rotation.z = beta;
   }
 
 
