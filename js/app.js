@@ -101,9 +101,9 @@ function animate() {
     const gamma = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
-    console.log('beta', beta);
-    console.log('gamma', gamma);
-    console.log('alpha', alpha);
+    console.log('x', beta * (180/Math.PI));
+    console.log('y', gamma * (180/Math.PI));
+    console.log('z', alpha * (180/Math.PI));
 
     cube.rotation.x = beta;
     cube.rotation.y = gamma;
