@@ -1,4 +1,5 @@
 let cube, renderer, scene, camera, texture, effect;
+let orientation = {};
 
 const initMedia = new Promise(function(resolve, reject) {
 
@@ -49,15 +50,10 @@ function toggleFullScreen() {
 }
 
 function getDeviceOrientation(event) {
-  var absolute = event.absolute;
-  var alpha    = event.alpha;
-  var beta     = event.beta;
-  var gamma    = event.gamma;
-
-  console.log('absolute', absolute);
-  console.log('alpha', alpha);
-  console.log('beta', beta);
-  console.log('gamma', gamma);
+  orientation.absolute = event.absolute;
+  orientation.alpha    = event.alpha;
+  orientation.beta     = event.beta;
+  orientation.gamma    = event.gamma;
 }
 
 const initThree = function (video) {
@@ -98,8 +94,11 @@ const initThree = function (video) {
 function animate() {
 	requestAnimationFrame( animate );
 
-	// cube.rotation.x += 0.001;
-	// cube.rotation.y += 0.001;
+  // Assign shape rotation radians to device rotation degrees
+	cube.rotation.x = (orientation.beta+180) * (Math.PI / 180); //range: -180 -> 180
+	cube.rotation.y = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
+  cube.rotation.z = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
+
   // texture.offset.x -= 0.01;
   // texture.offset.y -= 0.01;
 
