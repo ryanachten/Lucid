@@ -76,7 +76,7 @@ const initThree = function (video) {
     texture.wrapT = THREE.MirroredRepeatWrapping;
 
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
-    material.map = texture;
+    // material.map = texture;
 
     // const geometry = new THREE.SphereGeometry( 1, 25, 25);
     const geometry = new THREE.BoxGeometry( 1, 1, 1);
@@ -102,8 +102,12 @@ function animate() {
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
     console.log('x', beta * (180/Math.PI));
-    console.log('y', gamma * (180/Math.PI));
-    console.log('z', alpha * (180/Math.PI));
+    // console.log('y', gamma * (180/Math.PI));
+    // console.log('z', alpha * (180/Math.PI));
+
+    cube.material.color.r = (beta * (180/Math.PI)) /360;
+    // cube.material.color.g = (gamma * (180/Math.PI)) /360;
+    // cube.material.color.b = (alpha * (180/Math.PI)) /360;
 
     cube.rotation.x = beta;
     cube.rotation.y = gamma;
