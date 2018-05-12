@@ -128,11 +128,11 @@ function animate() {
     // console.log('y', gamma * (180/Math.PI));
     // console.log('z', alpha * (180/Math.PI));
 
-    cube.material.color.r = (beta * (180/Math.PI)) /360;
+    cube.material.color.g = (beta * (180/Math.PI)) /360;
     // cube.material.color.g = (gamma * (180/Math.PI)) /360;
     // cube.material.color.b = (alpha * (180/Math.PI)) /360;
 
-    cube.rotation.x = beta;
+    cube.rotation.z = beta;
     // cube.rotation.y = gamma;
     // cube.rotation.z = beta;
   }
