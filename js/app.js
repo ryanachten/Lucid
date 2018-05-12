@@ -53,7 +53,7 @@ function toggleFullScreen() {
     // Cancel full screen
     else {
       cancelFullScreen.call(doc);
-      window.screen.unlockOrientation();
+      window.screen.orientation.unlock();
   }
 }
 
@@ -122,7 +122,7 @@ function animate() {
 
     cube.material.color.g = (alpha * (180/Math.PI)) /360;
 
-    cube.rotation.x = alpha;
+    cube.rotation.y = alpha;
     // cube.rotation.y = gamma;
     // cube.rotation.z = beta; //works!
   }
