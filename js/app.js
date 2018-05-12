@@ -70,13 +70,6 @@ const initThree = function (video) {
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-    const pointLight = new THREE.PointLight( 0xff0000, 1, 100 );
-    pointLight.position.set( 1, 1, 1 );
-    scene.add( pointLight );
-
-    var ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
-    scene.add( ambientLight );
-
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
@@ -90,15 +83,15 @@ const initThree = function (video) {
     texture.wrapS = THREE.MirroredRepeatWrapping;
     texture.wrapT = THREE.MirroredRepeatWrapping;
 
-    const material = new THREE.MeshLambertMaterial({side: THREE.DoubleSide});
-    // material.map = texture;
+    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
+    material.map = texture;
 
-    // const geometry = new THREE.SphereGeometry( 1, 25, 25);
-    const geometry = new THREE.BoxGeometry( 1, 1, 1);
+    const geometry = new THREE.SphereGeometry( 1, 25, 25);
+    // const geometry = new THREE.BoxGeometry( 1, 1, 1);
     cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     effect = new THREE.StereoEffect( renderer );
-    camera.position.z = 5;
+    // camera.position.z = 5;
 
     window.addEventListener( 'resize', onWindowResize, false );
 
@@ -115,13 +108,6 @@ function animate() {
     const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180 //(orientation.beta+180)
     const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90 //((orientation.gamma+90)*2)
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
-
-    console.log('x', gamma * (180/Math.PI));
-    // console.log('y', gamma * (180/Math.PI));
-    // console.log('z', alpha * (180/Math.PI));
-
-    cube.material.color.g = (gamma * (180/Math.PI)) /360;
-
 
     cube.rotation.x = gamma;
     cube.rotation.y = alpha;
