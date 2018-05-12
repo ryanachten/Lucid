@@ -31,10 +31,6 @@ const initMedia = new Promise(function(resolve, reject) {
         // Add device rotation tracking
         window.addEventListener("deviceorientation", getDeviceOrientation, true);
 
-        // Lock screen to landscape
-        screen.orientation.lock('landscape-primary');
-
-
         resolve(video);
       });
   });
@@ -46,11 +42,18 @@ function toggleFullScreen() {
     var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
     var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
+    // Request full screen
     if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+
       requestFullScreen.call(docEl);
+
+      // Lock screen to landscape
+      screen.orientation.lock('landscape-primary');
     }
+    // Cancel full screen
     else {
       cancelFullScreen.call(doc);
+      screen.orientation.unlockOrientation();
   }
 }
 
@@ -113,7 +116,7 @@ function animate() {
     const gamma = ((orientation.gamma+90)*2) * (Math.PI / 180); //range: -90 -> 90
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
-    console.log('x', beta * (180/Math.PI));
+    console.log('x', alpha * (180/Math.PI));
     // console.log('y', gamma * (180/Math.PI));
     // console.log('z', alpha * (180/Math.PI));
 
