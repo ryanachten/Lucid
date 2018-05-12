@@ -62,6 +62,13 @@ const initThree = function (video) {
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
+    const pointLight = new THREE.PointLight( 0xff0000, 1, 100 );
+    pointLight.position.set( 1, 1, 1 );
+    scene.add( pointLight );
+
+    var ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+    scene.add( ambientLight );
+
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
@@ -75,7 +82,7 @@ const initThree = function (video) {
     texture.wrapS = THREE.MirroredRepeatWrapping;
     texture.wrapT = THREE.MirroredRepeatWrapping;
 
-    const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
+    const material = new THREE.MeshLambertMaterial({side: THREE.DoubleSide});
     // material.map = texture;
 
     // const geometry = new THREE.SphereGeometry( 1, 25, 25);
@@ -83,7 +90,7 @@ const initThree = function (video) {
     cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
     effect = new THREE.StereoEffect( renderer );
-    // camera.position.z = 5;
+    camera.position.z = 5;
 
     window.addEventListener( 'resize', onWindowResize, false );
 
