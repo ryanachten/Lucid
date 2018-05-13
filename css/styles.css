@@ -1,4 +1,15 @@
-.fullscreen{
+body{
+  margin: 0;
+}
+
+.ui__container{
   position: fixed;
-  right: 10px;
+  right: 0px;
+  padding: 10px;
+}
+.ui__fullscreen.active{
+  background: pink;
+}
+#video__container{
+  display: none;
 }

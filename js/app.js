@@ -1,41 +1,58 @@
 let cube, renderer, scene, camera, texture, effect;
 let orientation = {};
+let frameId;
 
-const initMedia = new Promise(function(resolve, reject) {
 
-    const video = document.createElement('video');
-    const videoSize = 128;
-    video.width = video.height = videoSize;
+const addEvents = () => {
+  // Request browser to go fullscreen
+  const fullscreenButton = document.querySelector('.ui__fullscreen');
+  fullscreenButton.addEventListener("click", toggleFullScreen, false);
 
-    // Uncomment to see video feed
-    // document.querySelector('body').appendChild(video);
+  // Device rotation tracking
+  window.addEventListener("deviceorientation", getDeviceOrientation, true);
 
-    const constraints = {
-      video: {
-        // Makes sure video size is square for webgl tiling
-        width: videoSize, height: videoSize,
-        // Makes sure back cam is used
-        facingMode: "environment"
-      },
-    };
+  // Three.js resize handler
+  window.addEventListener( 'resize', onWindowResize, false );
+}
 
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then((stream) => {
-        // Assign stream to video src
-        video.srcObject = stream;
+const removeEvents = () => {
+  document.querySelector('.ui__fullscreen').removeEventListener("click", toggleFullScreen);
+  window.removeEventListener("deviceorientation", getDeviceOrientation, true);
+  window.removeEventListener( 'resize', onWindowResize, false );
+}
 
-        // Request browser to go fullscreen
-        const fullscreenButton = document.querySelector('.fullscreen');
-        fullscreenButton.addEventListener("click", toggleFullScreen, false);
+function initMedia(){
 
-        // Add device rotation tracking
-        window.addEventListener("deviceorientation", getDeviceOrientation, true);
+  return new Promise((resolve, reject) => {
 
-        resolve(video);
-      });
-  });
+      const video = document.createElement('video');
+      video.id = 'video__container';
+      const videoSize = 128;
+      video.width = video.height = videoSize;
 
-function toggleFullScreen() {
+      // Uncomment to see video feed
+      document.querySelector('body').appendChild(video);
+
+      const constraints = {
+        video: {
+          // Makes sure video size is square for webgl tiling
+          width: videoSize, height: videoSize,
+          // Makes sure back cam is used
+          facingMode: "environment"
+        },
+      };
+
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then((stream) => {
+          // Assign stream to video src
+          video.srcObject = stream;
+
+          resolve(video);
+        });
+    });
+};
+
+function toggleFullScreen(e) {
     var doc = window.document;
     var docEl = doc.documentElement;
 
@@ -49,11 +66,14 @@ function toggleFullScreen() {
 
       // Lock screen to landscape
       window.screen.orientation.lock('landscape-primary');
+
+      e.target.classList.add('active');
     }
     // Cancel full screen
     else {
       cancelFullScreen.call(doc);
       window.screen.orientation.unlock();
+      e.target.classList.remove('active');
   }
 }
 
@@ -71,6 +91,7 @@ const initThree = function (video) {
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
     renderer = new THREE.WebGLRenderer();
+    renderer.domElement.id = "three__canvas"
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
@@ -93,15 +114,13 @@ const initThree = function (video) {
     effect = new THREE.StereoEffect( renderer );
     // camera.position.z = 5;
 
-    window.addEventListener( 'resize', onWindowResize, false );
-
     resolve();
   });
 }
 
 
 function animate() {
-	requestAnimationFrame( animate );
+	frameId = requestAnimationFrame( animate );
 
   // Assign shape rotation radians to device rotation degrees
   if (orientation.absolute) {
@@ -113,7 +132,6 @@ function animate() {
     cube.rotation.y = alpha;
     cube.rotation.z = beta;
   }
-
 
   texture.offset.x -= 0.01;
   texture.offset.y -= 0.01;
@@ -130,12 +148,12 @@ function onWindowResize(){
 
 }
 
-// animate();
-(function(){
-
-  initMedia.then( (video) => {
+function init(){
+  initMedia().then( (video) => {
     initThree(video).then( () => {
       animate();
+      addEvents();
     });
   });
-})();
+};
+init();
