@@ -136,6 +136,7 @@ const initThree = function (video) {
 
     geometryContainer = {
       box: new THREE.BoxGeometry( 1, 1, 1),
+      cone: new THREE.ConeGeometry( 1, 1, 8),
       sphere: new THREE.SphereGeometry( 1, 25, 25),
       octa: new THREE.OctahedronGeometry( 1, 0),
       tetra: new THREE.TetrahedronGeometry( 1, 0),
