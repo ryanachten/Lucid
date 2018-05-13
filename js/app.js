@@ -2,6 +2,7 @@ let shape, renderer, scene, camera, texture, effect;
 let geometryContainer;
 let orientation = {};
 let frameId;
+let objShuffleAnimation;
 
 
 const addEvents = () => {
@@ -35,10 +36,30 @@ const addEvents = () => {
     texture.repeat = {x: tileCount, y: tileCount};
   });
 
+  // Object select dropdown
   const objectSelect = document.querySelector('.ui__objectSelect');
   objectSelect.addEventListener( 'change', (e) => {
     const currentObject = geometryContainer[e.target.value];
     shape.geometry = currentObject;
+  });
+
+  //
+  const shuffleObject = document.querySelector('.ui__objShuffle');
+  shuffleObject.addEventListener("click", () => {
+    if (!shuffleObject.classList.contains('active')) {
+      shuffleObject.classList.add('active');
+      objShuffleAnimation = window.setInterval( () => {
+        const keyLength = Object.keys(geometryContainer).length;
+        const currentObjIndex = Math.floor( Math.random() * keyLength);
+        const currentObject = Object.keys(geometryContainer)[currentObjIndex];
+        shape.geometry = geometryContainer[currentObject];
+        objectSelect.selectedIndex = currentObjIndex;
+        console.log(currentObject);
+      }, 10000);
+    }else{
+      shuffleObject.classList.remove('active');
+      window.clearInterval(objShuffleAnimation);
+    }
   });
 }
 
@@ -159,8 +180,8 @@ function animate() {
 
   // Assign shape rotation radians to device rotation degrees
   if (orientation.absolute) {
-    const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180 //(orientation.beta+180)
-    const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90 //((orientation.gamma+90)*2)
+    const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180
+    const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
     shape.rotation.x = gamma;
