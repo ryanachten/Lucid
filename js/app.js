@@ -1,12 +1,10 @@
-let cube, renderer, scene, camera, texture, effect;
+let shape, renderer, scene, camera, texture, effect;
+let geometryContainer;
 let orientation = {};
 let frameId;
 
 
 const addEvents = () => {
-  // Request browser to go fullscreen
-  const fullscreenButton = document.querySelector('.ui__fullscreen');
-  fullscreenButton.addEventListener("click", toggleFullScreen, false);
 
   // Device rotation tracking
   window.addEventListener("deviceorientation", getDeviceOrientation, true);
@@ -14,11 +12,33 @@ const addEvents = () => {
   // Three.js resize handler
   window.addEventListener( 'resize', onWindowResize, false );
 
+  // Request browser to go fullscreen
+  const fullscreenButton = document.querySelector('.ui__fullscreen');
+  fullscreenButton.addEventListener("click", toggleFullScreen, false);
+
+  // Zoom out to get obj overview
+  const zoomOutButton = document.querySelector('.ui__zoomOut');
+  zoomOutButton.addEventListener("click", () => {
+    if (!zoomOutButton.classList.contains('active')) {
+      zoomOutButton.classList.add('active');
+      camera.position.z = 5;
+    }else{
+      zoomOutButton.classList.remove('active');
+      camera.position.z = 0;
+    }
+  });
+
   // Input slide for texture tile count
   const inputSlide = document.querySelector('.ui__tileCount');
   inputSlide.addEventListener( 'change', (e) => {
     const tileCount = e.target.value;
     texture.repeat = {x: tileCount, y: tileCount};
+  });
+
+  const objectSelect = document.querySelector('.ui__objectSelect');
+  objectSelect.addEventListener( 'change', (e) => {
+    const currentObject = geometryContainer[e.target.value];
+    shape.geometry = currentObject;
   });
 }
 
@@ -114,12 +134,19 @@ const initThree = function (video) {
     const material = new THREE.MeshBasicMaterial({side: THREE.DoubleSide});
     material.map = texture;
 
-    const geometry = new THREE.SphereGeometry( 1, 25, 25);
-    // const geometry = new THREE.BoxGeometry( 1, 1, 1);
-    cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
+    geometryContainer = {
+      box: new THREE.BoxGeometry( 1, 1, 1),
+      sphere: new THREE.SphereGeometry( 1, 25, 25),
+      octa: new THREE.OctahedronGeometry( 1, 0),
+      tetra: new THREE.TetrahedronGeometry( 1, 0),
+      icosa: new THREE.IcosahedronGeometry( 1, 0),
+      dodeca: new THREE.DodecahedronGeometry( 1, 0)
+    };
+
+    const geometry = geometryContainer.sphere;
+    shape = new THREE.Mesh( geometry, material );
+    scene.add( shape );
     effect = new THREE.StereoEffect( renderer );
-    // camera.position.z = 5;
 
     resolve();
   });
@@ -135,9 +162,14 @@ function animate() {
     const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90 //((orientation.gamma+90)*2)
     const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
 
-    cube.rotation.x = gamma;
-    cube.rotation.y = alpha;
-    cube.rotation.z = beta;
+    shape.rotation.x = gamma;
+    shape.rotation.y = alpha;
+    shape.rotation.z = beta;
+  }
+  else{
+    shape.rotation.x += 0.01;
+    shape.rotation.y += 0.01;
+    shape.rotation.z += 0.01;
   }
 
   texture.offset.x -= 0.01;

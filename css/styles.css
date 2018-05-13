@@ -7,7 +7,7 @@ body{
   right: 0px;
   padding: 10px;
 }
-.ui__fullscreen.active{
+button.active{
   background: pink;
 }
 #video__container{
