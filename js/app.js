@@ -13,6 +13,13 @@ const addEvents = () => {
 
   // Three.js resize handler
   window.addEventListener( 'resize', onWindowResize, false );
+
+  // Input slide for texture tile count
+  const inputSlide = document.querySelector('.ui__tileCount');
+  inputSlide.addEventListener( 'change', (e) => {
+    const tileCount = e.target.value;
+    texture.repeat = {x: tileCount, y: tileCount};
+  });
 }
 
 const removeEvents = () => {
