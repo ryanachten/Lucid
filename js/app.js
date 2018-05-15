@@ -1,4 +1,7 @@
-let shape, renderer, scene, camera, texture, effect;
+// stereoCamera and EffectComposer inspired by: https://rawgit.com/owntheweb/three.js/dev/examples/vr_effect_composer_stereo_camera.html
+// Shader exmaples via: https://www.airtightinteractive.com/demos/js/shaders/preview/
+
+let shape, renderer, scene, camera, texture, effect, stereoCamera, composer, renderPass;
 let geometryContainer;
 let orientation = {};
 let frameId;
@@ -46,6 +49,20 @@ const initThree = function (video) {
     renderer.domElement.id = "three__canvas"
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
+
+    stereoCamera = new THREE.StereoCamera();
+    renderPass = new THREE.RenderPass(scene, stereoCamera.left);
+
+    const kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
+
+    copyPass = new THREE.ShaderPass(THREE.CopyShader);
+    copyPass.renderToScreen = true;
+    
+    composer = new THREE.EffectComposer(renderer);
+    composer.addPass(renderPass);
+    composer.addPass(kaleidoPass);
+    composer.addPass(copyPass);
+
 
     texture = new THREE.VideoTexture( video );
 
@@ -100,7 +117,26 @@ function animate() {
   texture.offset.x -= 0.01;
   texture.offset.y -= 0.01;
 
-	effect.render(scene, camera);
+  // effect.render(scene, camera);
+
+  const size = renderer.getSize();
+  stereoCamera.update(camera);
+
+
+  if ( renderer.autoClear ) renderer.clear();
+		renderer.setScissorTest( true );
+
+  renderer.setScissor( 0, 0, size.width / 2, size.height );
+  renderer.setViewport( 0, 0, size.width / 2, size.height);
+  renderPass.camera = stereoCamera.cameraL;
+  composer.render();
+
+  renderer.setScissor( size.width / 2, 0, size.width / 2, size.height );
+  renderer.setViewport( window.innerWidth / 2, 0, size.width / 2, size.height);
+  renderPass.camera = stereoCamera.cameraR;
+  composer.render();
+
+  renderer.setScissorTest( false );
 };
 
 const addEvents = () => {
