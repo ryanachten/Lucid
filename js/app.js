@@ -2,6 +2,7 @@
 // Shader exmaples via: https://www.airtightinteractive.com/demos/js/shaders/preview/
 
 let shape, renderer, scene, camera, texture, effect, stereoCamera, composer, renderPass;
+let stats;
 let geometryContainer;
 let orientation = {};
 let frameId;
@@ -41,6 +42,12 @@ function initMedia(){
 
 const initThree = function (video) {
   return new Promise(function(resolve, reject) {
+
+    stats = new Stats();
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( stats.dom );
+    console.log(stats);
+
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -57,7 +64,7 @@ const initThree = function (video) {
 
     copyPass = new THREE.ShaderPass(THREE.CopyShader);
     copyPass.renderToScreen = true;
-    
+
     composer = new THREE.EffectComposer(renderer);
     composer.addPass(renderPass);
     composer.addPass(kaleidoPass);
@@ -98,6 +105,8 @@ const initThree = function (video) {
 function animate() {
 	frameId = requestAnimationFrame( animate );
 
+  stats.begin();
+
   // Assign shape rotation radians to device rotation degrees
   if (orientation.absolute) {
     const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180
@@ -137,6 +146,8 @@ function animate() {
   composer.render();
 
   renderer.setScissorTest( false );
+
+  stats.end();
 };
 
 const addEvents = () => {
