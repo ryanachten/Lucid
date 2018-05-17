@@ -2,6 +2,8 @@ import Stats from 'stats.js';
 import * as THREE from 'three';
 import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effectcomposer-es6';
 import KaleidoShader from '../shaders/KaleidoShader';
+import BadTVShader from '../shaders/BadTVShader';
+import RGBShiftShader from '../shaders/RGBShiftShader';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -29,10 +31,16 @@ const initThree = function ({mount, video}) {
     const copyPass = new ShaderPass(CopyShader);
     copyPass.renderToScreen = true;
 
+    THREE.BadTVShader = BadTVShader;
     THREE.KaleidoShader = KaleidoShader;
+    THREE.RGBShiftShader = RGBShiftShader;
+    const badTVPass = new ShaderPass( THREE.BadTVShader );
     const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
+    const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
     const filterPasses = {
-      kalei: kaleidoPass
+      kalei: kaleidoPass,
+      badTv: badTVPass,
+      rgbShift: rgbShiftPass,
     };
 
     const composer = new EffectComposer(renderer);

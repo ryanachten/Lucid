@@ -105,6 +105,11 @@ class ThreeProject extends React.Component {
       composer.passes.splice(1, 0, currentFilter);
     }
     // If there's already a filter and the new one is none
+    // replace the filter
+    else if (composer.passes.length === 3 && filter !== 'none'){
+      composer.passes.splice(1, 1, currentFilter);
+    }
+    // If there's already a filter and the new one is none
     // remove the filter
     else if (composer.passes.length === 3 && filter === 'none') {
       composer.passes.splice(1, 1);

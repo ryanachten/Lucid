@@ -115,6 +115,8 @@ class HomePage extends React.Component{
             onChange={this.onFilterChange}>
             <option value="none">None</option>
             <option value="kalei">Kaleidoscope</option>
+            <option value="badTv">BadTV</option>
+            <option value="rgbShift">RGB Shift</option>
           </select>
         </div>
 
