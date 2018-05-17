@@ -1,0 +1,55 @@
+.topNav--container{
+  align-items: center;
+  align-self: start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+}
+
+.topNav--linkContainer{
+  display: none;
+}
+.topNav--linkContainer.topNav--open{
+  display: flex;
+  justify-content: center;
+}
+
+.topNav--link{
+  font-weight: normal;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin: 20px 10px;
+}
+.logotype.topNav--link{
+  font-size: 2rem;
+}
+.is-active{
+  font-weight: bold;
+}
+
+.topNav--menuButton{
+  background: none;
+  border: none;
+  color: $body-color;
+  font-size: 30px;
+  height: 30px;
+  width: 30px;
+  padding: 0px;
+
+  &:focus{
+    outline: none;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .topNav--container{
+    justify-content: space-around;
+  }
+  .topNav--linkContainer{
+    width: 100%;
+  }
+}

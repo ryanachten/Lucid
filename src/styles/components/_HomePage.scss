@@ -1,0 +1,15 @@
+body{
+  margin: 0;
+}
+
+.ui__container{
+  position: fixed;
+  right: 0px;
+  padding: 10px;
+}
+button.active{
+  background: pink;
+}
+#video__container{
+  display: none;
+}

@@ -1,0 +1,58 @@
+html{
+  font-size: 62.5%;
+}
+
+body{
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+}
+
+#router--container{
+  background-image: $bg-grad;
+  display: flex;
+  flex: 1 1 0;
+  flex-flow: column wrap;
+  min-height: 100vh;
+  height: 100%;
+}
+
+button{
+  cursor: pointer;
+}
+
+button:disabled{
+  cursor: default;
+}
+
+h1{
+  font-family: $type-kumar;
+  text-transform: lowercase;
+  font-size: $xl-size;
+  color: $body-color;
+}
+h2{
+  font-family: $type-sans;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: $m-size;
+  color: $body-color;
+}
+h3,h4{
+  color: $body-color;
+}
+
+p{
+  font-family: $type-serif;
+  color: $body-color;
+}
+
+li{
+  font-family: $type-serif;
+  color: $body-color;
+}
+
+a{
+  text-decoration: none;
+  color: $body-color;
+  font-weight: bold;
+}
