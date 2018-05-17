@@ -16,6 +16,7 @@ class ThreeProject extends React.Component {
     this.animate = this.animate.bind(this);
     this.handleZoomOut = this.handleZoomOut.bind(this);
     this.handleTileCount = this.handleTileCount.bind(this);
+    this.handleSelectedFilter = this.handleSelectedFilter.bind(this);
 
     this.state = {
       orientation: undefined
@@ -45,6 +46,9 @@ class ThreeProject extends React.Component {
     }
     if (nextProps.selectedObject !== this.props.selectedObject) {
       this.handleSelectedObject(nextProps.selectedObject);
+    }
+    if (nextProps.filter !== this.props.filter) {
+      this.handleSelectedFilter(nextProps.filter);
     }
   }
 
@@ -88,6 +92,25 @@ class ThreeProject extends React.Component {
     const newGeometry = this.state.geometryContainer[selectedObject];
     shape.geometry = newGeometry;
     this.setState( () => { shape });
+  }
+
+  handleSelectedFilter(filter){
+    const composer = this.state.composer;
+    const filterPasses = this.state.filterPasses;
+    const currentFilter = filterPasses[filter];
+
+    // If no filter has been applied and a new filter
+    // is not 'none'
+    if (composer.passes.length === 2 && filter !== 'none'){
+      composer.passes.splice(1, 0, currentFilter);
+    }
+    // If there's already a filter and the new one is none
+    // remove the filter
+    else if (composer.passes.length === 3 && filter === 'none') {
+      composer.passes.splice(1, 1);
+    }
+
+    this.setState( () => { composer });
   }
 
   start() {

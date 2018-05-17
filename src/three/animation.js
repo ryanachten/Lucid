@@ -3,7 +3,7 @@ import * as THREE from 'three';
 function animate({
     // Three assets
     stats, scene, camera, stereoCamera, renderer,
-    texture, material, shape,
+    texture, material, shape, composer, renderPass,
     // Device orientation
     orientation
   }) {
@@ -29,26 +29,21 @@ function animate({
   texture.offset.x -= 0.01;
   texture.offset.y -= 0.01;
 
-  // effect.render(scene, camera);
-
   const size = renderer.getSize();
   stereoCamera.update(camera);
-
 
   if ( renderer.autoClear ) renderer.clear();
 		renderer.setScissorTest( true );
 
   renderer.setScissor( 0, 0, size.width / 2, size.height );
   renderer.setViewport( 0, 0, size.width / 2, size.height);
-  // renderPass.camera = stereoCamera.cameraL;
-  // composer.render();
-  renderer.render(scene, stereoCamera.cameraL);
+  renderPass.camera = stereoCamera.cameraL;
+  composer.render();
 
   renderer.setScissor( size.width / 2, 0, size.width / 2, size.height );
   renderer.setViewport( window.innerWidth / 2, 0, size.width / 2, size.height);
-  // renderPass.camera = stereoCamera.cameraR;
-  // composer.render();
-  renderer.render(scene, stereoCamera.cameraR);
+  renderPass.camera = stereoCamera.cameraR;
+  composer.render();
 
   renderer.setScissorTest( false );
 

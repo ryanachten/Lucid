@@ -1,5 +1,7 @@
 import Stats from 'stats.js';
 import * as THREE from 'three';
+import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effectcomposer-es6';
+import KaleidoShader from '../shaders/KaleidoShader';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -23,17 +25,19 @@ const initThree = function ({mount, video}) {
     mount.appendChild(renderer.domElement);
 
     // Add shader passes
-    // renderPass = new THREE.RenderPass(scene, stereoCamera.left);
-    //
-    // const kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
-    //
-    // copyPass = new THREE.ShaderPass(THREE.CopyShader);
-    // copyPass.renderToScreen = true;
-    //
-    // const composer = new THREE.EffectComposer(renderer);
-    // composer.addPass(renderPass);
-    // composer.addPass(kaleidoPass);
-    // composer.addPass(copyPass);
+    const renderPass = new RenderPass(scene, stereoCamera.left);
+    const copyPass = new ShaderPass(CopyShader);
+    copyPass.renderToScreen = true;
+
+    THREE.KaleidoShader = KaleidoShader;
+    const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
+    const filterPasses = {
+      kalei: kaleidoPass
+    };
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderPass);
+    composer.addPass(copyPass);
 
     // Setup video texture using webcam video
     const texture = new THREE.VideoTexture( video );
@@ -62,7 +66,10 @@ const initThree = function ({mount, video}) {
     scene.add( shape );
 
     resolve({ stats, scene, camera, stereoCamera, renderer, texture,
-              material, geometryContainer, geometry, shape });
+              material, geometryContainer, geometry, shape,
+              // Shaders
+              composer, renderPass, filterPasses
+             });
   });
 }
 

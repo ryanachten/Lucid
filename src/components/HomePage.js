@@ -15,13 +15,15 @@ class HomePage extends React.Component{
     this.onTileCountChange = this.onTileCountChange.bind(this);
     this.onObjectChange = this.onObjectChange.bind(this);
     this.onShuffleChange = this.onShuffleChange.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
 
     this.state = {
       fullscreen: false,
       zoomOut: false,
       tileCount: 4,
       selectedObject: 'sphere',
-      shuffle: false
+      shuffle: false,
+      filter: 'none',
     }
   }
 
@@ -80,6 +82,12 @@ class HomePage extends React.Component{
     $('.ui__objShuffle').toggleClass('active');
   }
 
+  onFilterChange(){
+    this.setState( () => ({
+      filter: $('.ui__filterSelect')[0].value
+    }));
+  }
+
   render = () => {
 
     return(
@@ -103,6 +111,11 @@ class HomePage extends React.Component{
           </select>
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle</button>
+          <select className="ui__filterSelect" defaultValue="none"
+            onChange={this.onFilterChange}>
+            <option value="none">None</option>
+            <option value="kalei">Kaleidoscope</option>
+          </select>
         </div>
 
         <ThreeProject
@@ -110,6 +123,7 @@ class HomePage extends React.Component{
           tileCount={this.state.tileCount}
           selectedObject={this.state.selectedObject}
           shuffle={this.state.shuffle}
+          filter={this.state.filter}
         />
       </div>
     );
