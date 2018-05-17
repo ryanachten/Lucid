@@ -5,6 +5,7 @@ import KaleidoShader from '../shaders/KaleidoShader';
 import BadTVShader from '../shaders/BadTVShader';
 import RGBShiftShader from '../shaders/RGBShiftShader';
 import HueSaturationShader from '../shaders/HueSaturationShader';
+import BrightnessContrastShader from '../shaders/BrightnessContrastShader';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -36,15 +37,18 @@ const initThree = function ({mount, video}) {
     THREE.KaleidoShader = KaleidoShader;
     THREE.RGBShiftShader = RGBShiftShader;
     THREE.HueSaturationShader = HueSaturationShader;
+    THREE.BrightnessContrastShader = BrightnessContrastShader;
     const badTVPass = new ShaderPass( THREE.BadTVShader );
     const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
     const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
     const hueSaturationPass = new ShaderPass( THREE.HueSaturationShader );
+    const brightnessContrastPass = new ShaderPass( THREE.BrightnessContrastShader );
     const filterPasses = {
       kalei: kaleidoPass,
       badTv: badTVPass,
       rgbShift: rgbShiftPass,
-      hueSaturation: hueSaturationPass
+      hueSaturation: hueSaturationPass,
+      brightnessContrast: brightnessContrastPass
     };
 
     const composer = new EffectComposer(renderer);

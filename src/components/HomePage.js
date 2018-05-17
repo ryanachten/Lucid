@@ -118,6 +118,7 @@ class HomePage extends React.Component{
             <option value="badTv">BadTV</option>
             <option value="rgbShift">RGB Shift</option>
             <option value="hueSaturation">Hue/Saturation</option>
+            <option value="brightnessContrast">Brightness/Contrast</option>
           </select>
         </div>
 
