@@ -11,6 +11,7 @@ class ThreeProject extends React.Component {
   constructor(props) {
     super(props)
 
+    this.onWindowResize = this.onWindowResize.bind(this);
     this.animate = this.animate.bind(this);
     this.handleZoomOut = this.handleZoomOut.bind(this);
     this.handleTileCount = this.handleTileCount.bind(this);
@@ -21,8 +22,10 @@ class ThreeProject extends React.Component {
   componentDidMount() {
     initMedia().then( (video) => {
         initThree({mount: this.mount, video}).then( (assets) => {
+          // Adds assets from three.js setup to state
           this.setState( () => ({ ...assets }) );
-          console.log(this.state);
+          window.addEventListener( 'resize', this.onWindowResize, false );
+          // Then starts animation
           this.start();
         //   addEvents();
         });
@@ -39,6 +42,16 @@ class ThreeProject extends React.Component {
     if (nextProps.selectedObject !== this.props.selectedObject) {
       this.handleSelectedObject(nextProps.selectedObject);
     }
+  }
+
+  onWindowResize(){
+    const {camera, renderer} = this.state;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    this.setState( () => ({
+      camera, renderer
+    }));
   }
 
   handleZoomOut(zoomOut){
