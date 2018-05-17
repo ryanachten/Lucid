@@ -12,11 +12,14 @@ class ThreeProject extends React.Component {
     super(props)
 
     this.onWindowResize = this.onWindowResize.bind(this);
+    this.getDeviceOrientation = this.getDeviceOrientation.bind(this);
     this.animate = this.animate.bind(this);
     this.handleZoomOut = this.handleZoomOut.bind(this);
     this.handleTileCount = this.handleTileCount.bind(this);
 
-    this.state = {};
+    this.state = {
+      orientation: undefined
+    };
   }
 
   componentDidMount() {
@@ -24,10 +27,11 @@ class ThreeProject extends React.Component {
         initThree({mount: this.mount, video}).then( (assets) => {
           // Adds assets from three.js setup to state
           this.setState( () => ({ ...assets }) );
+          // Add resize and device orientation events
           window.addEventListener( 'resize', this.onWindowResize, false );
+          window.addEventListener("deviceorientation", this.getDeviceOrientation, true);
           // Then starts animation
           this.start();
-        //   addEvents();
         });
       });
   }
@@ -51,6 +55,17 @@ class ThreeProject extends React.Component {
     renderer.setSize( window.innerWidth, window.innerHeight );
     this.setState( () => ({
       camera, renderer
+    }));
+  }
+
+  getDeviceOrientation(e){
+    const orientation = this.state.orientation;
+    orientation.absolute = e.absolute;
+    orientation.alpha    = e.alpha;
+    orientation.beta     = e.beta;
+    orientation.gamma    = e.gamma;
+    this.setState( () => ({
+      orientation
     }));
   }
 

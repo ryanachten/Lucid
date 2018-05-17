@@ -3,26 +3,28 @@ import * as THREE from 'three';
 function animate({
     // Three assets
     stats, scene, camera, stereoCamera, renderer,
-    texture, material, shape
+    texture, material, shape,
+    // Device orientation
+    orientation
   }) {
 
   stats.begin();
 
   // Assign shape rotation radians to device rotation degrees
-  // if (orientation.absolute) {
-  //   const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180
-  //   const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90
-  //   const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
-  //
-  //   shape.rotation.x = gamma;
-  //   shape.rotation.y = alpha;
-  //   shape.rotation.z = beta;
-  // }
-  // else{
-  //   shape.rotation.x += 0.01;
-  //   shape.rotation.y += 0.01;
-  //   shape.rotation.z += 0.01;
-  // }
+  if (orientation && orientation.absolute) {
+    const beta = orientation.beta * (Math.PI / 180); //range: -180 -> 180
+    const gamma = orientation.gamma * (Math.PI / 180); //range: -90 -> 90
+    const alpha = orientation.alpha * (Math.PI / 180); //range: 0 -> 360
+
+    shape.rotation.x = gamma;
+    shape.rotation.y = alpha;
+    shape.rotation.z = beta;
+  }
+  else{
+    shape.rotation.x += 0.01;
+    shape.rotation.y += 0.01;
+    shape.rotation.z += 0.01;
+  }
 
   texture.offset.x -= 0.01;
   texture.offset.y -= 0.01;
