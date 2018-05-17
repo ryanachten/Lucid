@@ -4,6 +4,7 @@ import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effect
 import KaleidoShader from '../shaders/KaleidoShader';
 import BadTVShader from '../shaders/BadTVShader';
 import RGBShiftShader from '../shaders/RGBShiftShader';
+import HueSaturationShader from '../shaders/HueSaturationShader';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -34,13 +35,16 @@ const initThree = function ({mount, video}) {
     THREE.BadTVShader = BadTVShader;
     THREE.KaleidoShader = KaleidoShader;
     THREE.RGBShiftShader = RGBShiftShader;
+    THREE.HueSaturationShader = HueSaturationShader;
     const badTVPass = new ShaderPass( THREE.BadTVShader );
     const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
     const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
+    const hueSaturationPass = new ShaderPass( THREE.HueSaturationShader );
     const filterPasses = {
       kalei: kaleidoPass,
       badTv: badTVPass,
       rgbShift: rgbShiftPass,
+      hueSaturation: hueSaturationPass
     };
 
     const composer = new EffectComposer(renderer);
