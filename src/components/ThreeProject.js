@@ -63,14 +63,16 @@ class ThreeProject extends React.Component {
   }
 
   getDeviceOrientation(e){
-    const orientation = this.state.orientation;
-    orientation.absolute = e.absolute;
-    orientation.alpha    = e.alpha;
-    orientation.beta     = e.beta;
-    orientation.gamma    = e.gamma;
-    this.setState( () => ({
-      orientation
-    }));
+    if (e.absolute) {
+      const orientation = this.state.orientation;
+      orientation.absolute = e.absolute;
+      orientation.alpha    = e.alpha;
+      orientation.beta     = e.beta;
+      orientation.gamma    = e.gamma;
+      this.setState( () => ({
+        orientation
+      }));
+    }
   }
 
   handleZoomOut(zoomOut){
@@ -97,7 +99,7 @@ class ThreeProject extends React.Component {
   handleSelectedFilter(filter){
     const composer = this.state.composer;
     const filterPasses = this.state.filterPasses;
-    const currentFilter = filterPasses[filter];
+    let currentFilter = filterPasses[filter].shader;
 
     // If no filter has been applied and a new filter
     // is not 'none'

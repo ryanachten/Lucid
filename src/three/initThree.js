@@ -1,11 +1,7 @@
 import Stats from 'stats.js';
 import * as THREE from 'three';
 import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effectcomposer-es6';
-import KaleidoShader from '../shaders/KaleidoShader';
-import BadTVShader from '../shaders/BadTVShader';
-import RGBShiftShader from '../shaders/RGBShiftShader';
-import HueSaturationShader from '../shaders/HueSaturationShader';
-import BrightnessContrastShader from '../shaders/BrightnessContrastShader';
+import getShaderPasses from './initShaders';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -33,23 +29,7 @@ const initThree = function ({mount, video}) {
     const copyPass = new ShaderPass(CopyShader);
     copyPass.renderToScreen = true;
 
-    THREE.BadTVShader = BadTVShader;
-    THREE.KaleidoShader = KaleidoShader;
-    THREE.RGBShiftShader = RGBShiftShader;
-    THREE.HueSaturationShader = HueSaturationShader;
-    THREE.BrightnessContrastShader = BrightnessContrastShader;
-    const badTVPass = new ShaderPass( THREE.BadTVShader );
-    const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
-    const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
-    const hueSaturationPass = new ShaderPass( THREE.HueSaturationShader );
-    const brightnessContrastPass = new ShaderPass( THREE.BrightnessContrastShader );
-    const filterPasses = {
-      kalei: kaleidoPass,
-      badTv: badTVPass,
-      rgbShift: rgbShiftPass,
-      hueSaturation: hueSaturationPass,
-      brightnessContrast: brightnessContrastPass
-    };
+    const filterPasses = getShaderPasses();
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
