@@ -23,7 +23,7 @@ const getShaderPasses = () => {
     kalei: {
       shader: kaleidoPass,
       uniforms: {
-        sides: { min: 2, max: 20, default: 6 }
+        sides: { min: 0.1, max: 20, default: 6 }
       }
     },
     badTv: {

@@ -1,7 +1,6 @@
 import Stats from 'stats.js';
 import * as THREE from 'three';
 import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effectcomposer-es6';
-import getShaderPasses from './initShaders';
 
 const initThree = function ({mount, video}) {
   return new Promise(function(resolve, reject) {
@@ -28,8 +27,6 @@ const initThree = function ({mount, video}) {
     const renderPass = new RenderPass(scene, stereoCamera.left);
     const copyPass = new ShaderPass(CopyShader);
     copyPass.renderToScreen = true;
-
-    const filterPasses = getShaderPasses();
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderPass);
@@ -64,7 +61,7 @@ const initThree = function ({mount, video}) {
     resolve({ stats, scene, camera, stereoCamera, renderer, texture,
               material, geometryContainer, geometry, shape,
               // Shaders
-              composer, renderPass, filterPasses
+              composer, renderPass
              });
   });
 }

@@ -4,6 +4,7 @@ import $ from 'jquery';
 import projects from '../store';
 import ThreeProject from './ThreeProject';
 import LoadingScreen from '../components/LoadingScreen';
+import initShaders from '../three/initShaders';
 
 const defaultProject = 'oscil';
 
@@ -16,6 +17,7 @@ class HomePage extends React.Component{
     this.onObjectChange = this.onObjectChange.bind(this);
     this.onShuffleChange = this.onShuffleChange.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
+    this.onUniformsChange = this.onUniformsChange.bind(this);
 
     this.state = {
       fullscreen: false,
@@ -25,6 +27,11 @@ class HomePage extends React.Component{
       shuffle: false,
       filter: 'none',
     }
+  }
+
+  componentDidMount(){
+    const shaders = initShaders();
+    this.setState({ shaders });
   }
 
   onFullscreenToggle(){
@@ -83,9 +90,20 @@ class HomePage extends React.Component{
   }
 
   onFilterChange(){
+    const filterName = $('.ui__filterSelect')[0].value;
+    const filter = this.state.shaders[filterName];
     this.setState( () => ({
-      filter: $('.ui__filterSelect')[0].value
+        filter
     }));
+  }
+
+  onUniformsChange(e){
+    const uniformName = e.target.getAttribute('data-uniforms');
+    const newAmount = e.target.value;
+    const newFilter = this.state.filter;
+    console.log(newFilter.shader.uniforms[uniformName].value);
+    newFilter.shader.uniforms[uniformName].value = newAmount;
+    console.log(newFilter.shader.uniforms[uniformName].value);
   }
 
   render = () => {
@@ -111,15 +129,29 @@ class HomePage extends React.Component{
           </select>
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle</button>
-          <select className="ui__filterSelect" defaultValue="none"
-            onChange={this.onFilterChange}>
-            <option value="none">None</option>
-            <option value="kalei">Kaleidoscope</option>
-            <option value="badTv">BadTV</option>
-            <option value="rgbShift">RGB Shift</option>
-            <option value="hueSaturation">Hue/Saturation</option>
-            <option value="brightnessContrast">Brightness/Contrast</option>
-          </select>
+          { this.state.shaders && (
+            <select className="ui__filterSelect" defaultValue="none"
+              onChange={this.onFilterChange}>
+              { Object.keys(this.state.shaders).map( (shader) => (
+                <option key={shader}>{shader}</option>
+              )) }
+            </select>
+          )}
+        { this.state.filter !== 'none' && (
+          <div className="ui__uniformContainer">
+          { Object.keys(this.state.filter.uniforms).map( (uniform) => (
+            <div key={uniform}>
+              <span>{uniform}</span>
+              <input data-uniforms={uniform} onChange={this.onUniformsChange}
+                type="range"
+                defaultValue={this.state.filter.uniforms[uniform].default}
+                min={this.state.filter.uniforms[uniform].min}
+                max={this.state.filter.uniforms[uniform].max}
+                step={0.01}/>
+            </div>
+          )) }
+          </div>
+        ) }
         </div>
 
         <ThreeProject

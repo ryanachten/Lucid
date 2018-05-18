@@ -98,22 +98,21 @@ class ThreeProject extends React.Component {
 
   handleSelectedFilter(filter){
     const composer = this.state.composer;
-    const filterPasses = this.state.filterPasses;
-    let currentFilter = filterPasses[filter].shader;
+    let currentFilter = filter.shader;
 
     // If no filter has been applied and a new filter
     // is not 'none'
-    if (composer.passes.length === 2 && filter !== 'none'){
+    if (composer.passes.length === 2 && currentFilter !== undefined){
       composer.passes.splice(1, 0, currentFilter);
     }
     // If there's already a filter and the new one is none
     // replace the filter
-    else if (composer.passes.length === 3 && filter !== 'none'){
+    else if (composer.passes.length === 3 && currentFilter !== undefined){
       composer.passes.splice(1, 1, currentFilter);
     }
     // If there's already a filter and the new one is none
     // remove the filter
-    else if (composer.passes.length === 3 && filter === 'none') {
+    else if (composer.passes.length === 3 && currentFilter === undefined) {
       composer.passes.splice(1, 1);
     }
 
