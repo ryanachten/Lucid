@@ -9,10 +9,11 @@ import ThreeProject from './ThreeProject';
 import LoadingScreen from './LoadingScreen';
 import initShaders from '../three/initShaders';
 
+import FullScreenButton from './FullScreenButton';
+
 class HomePage extends React.Component{
   constructor(props){
     super(props);
-    this.onFullscreenToggle = this.onFullscreenToggle.bind(this);
     this.onZoomOutToggle = this.onZoomOutToggle.bind(this);
     this.onTileCountChange = this.onTileCountChange.bind(this);
     this.onObjectChange = this.onObjectChange.bind(this);
@@ -34,35 +35,6 @@ class HomePage extends React.Component{
   componentDidMount(){
     const shaders = initShaders();
     this.setState({ shaders });
-  }
-
-  onFullscreenToggle(){
-
-    var doc = window.document;
-    var docEl = doc.documentElement;
-
-    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-
-    // Request full screen
-    if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-
-      requestFullScreen.call(docEl);
-
-      // Lock screen to landscape
-      window.screen.orientation.lock('landscape-primary');
-
-      $('.ui__fullscreen').addClass('active');
-    }
-    // Cancel full screen
-    else {
-
-      const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-      cancelFullScreen.call(doc);
-      window.screen.orientation.unlock();
-
-      $('.ui__fullscreen').removeClass('active');
-    }
   }
 
   onZoomOutToggle(){
@@ -106,27 +78,12 @@ class HomePage extends React.Component{
     newFilter.shader.uniforms[uniformName].value = newAmount;
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
-    const shaderList = Object.keys(this.state.shaders);
-    const newShaderList = arrayMove(shaderList, oldIndex, newIndex);
-    const oldShaderContainer = this.state.shaders;
-    const newShaderContainer = {};
-    for (var i = 0; i < newShaderList.length; i++) {
-      const currentShader = newShaderList[i];
-      newShaderContainer[currentShader] = oldShaderContainer[currentShader];
-    }
-    this.setState({
-      shaders: newShaderContainer
-    });
-  };
-
   render = () => {
 
     return(
       <div>
         <div className="ui__container">
-          <button className="ui__fullscreen"
-            onClick={this.onFullscreenToggle}>Fullscreen</button>
+          <FullScreenButton />
           <button className="ui__zoomOut"
             onClick={this.onZoomOutToggle}>Zoom Out</button>
           <input className="ui__tileCount" type="range" min="1" max="20" step="1"
