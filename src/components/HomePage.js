@@ -1,12 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import $ from 'jquery';
-import projects from '../store';
-import ThreeProject from './ThreeProject';
-import LoadingScreen from '../components/LoadingScreen';
-import initShaders from '../three/initShaders';
 
-const defaultProject = 'oscil';
+import { setZoomOut } from '../actions/settings';
+
+import ThreeProject from './ThreeProject';
+import LoadingScreen from './LoadingScreen';
+import initShaders from '../three/initShaders';
 
 class HomePage extends React.Component{
   constructor(props){
@@ -21,11 +22,12 @@ class HomePage extends React.Component{
 
     this.state = {
       fullscreen: false,
-      zoomOut: false,
+      zoomOut: this.props.zoomOut,
       tileCount: 4,
       selectedObject: 'sphere',
       shuffle: false,
       filter: 'none',
+      activeFilters: {}
     }
   }
 
@@ -64,9 +66,9 @@ class HomePage extends React.Component{
   }
 
   onZoomOutToggle(){
-    this.setState((prevState) => ({
-      zoomOut: !prevState.zoomOut
-    }));
+    this.props.dispatch(
+      setZoomOut(!this.props.zoomOut)
+    );
     $('.ui__zoomOut').toggleClass('active');
   }
 
@@ -101,10 +103,22 @@ class HomePage extends React.Component{
     const uniformName = e.target.getAttribute('data-uniforms');
     const newAmount = e.target.value;
     const newFilter = this.state.filter;
-    console.log(newFilter.shader.uniforms[uniformName].value);
     newFilter.shader.uniforms[uniformName].value = newAmount;
-    console.log(newFilter.shader.uniforms[uniformName].value);
   }
+
+  onSortEnd = ({oldIndex, newIndex}) => {
+    const shaderList = Object.keys(this.state.shaders);
+    const newShaderList = arrayMove(shaderList, oldIndex, newIndex);
+    const oldShaderContainer = this.state.shaders;
+    const newShaderContainer = {};
+    for (var i = 0; i < newShaderList.length; i++) {
+      const currentShader = newShaderList[i];
+      newShaderContainer[currentShader] = oldShaderContainer[currentShader];
+    }
+    this.setState({
+      shaders: newShaderContainer
+    });
+  };
 
   render = () => {
 
@@ -129,33 +143,35 @@ class HomePage extends React.Component{
           </select>
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle</button>
-          { this.state.shaders && (
-            <select className="ui__filterSelect" defaultValue="none"
-              onChange={this.onFilterChange}>
-              { Object.keys(this.state.shaders).map( (shader) => (
-                <option key={shader}>{shader}</option>
-              )) }
-            </select>
-          )}
-        { this.state.filter !== 'none' && (
-          <div className="ui__uniformContainer">
-          { Object.keys(this.state.filter.uniforms).map( (uniform) => (
-            <div key={uniform}>
-              <span>{uniform}</span>
-              <input data-uniforms={uniform} onChange={this.onUniformsChange}
-                type="range"
-                defaultValue={this.state.filter.uniforms[uniform].default}
-                min={this.state.filter.uniforms[uniform].min}
-                max={this.state.filter.uniforms[uniform].max}
-                step={0.01}/>
+          <div className="ui_filterContainer">
+            { this.state.shaders && (
+              <select className="ui__filterSelect" defaultValue="none"
+                onChange={this.onFilterChange}>
+                { Object.keys(this.state.shaders).map( (shader) => (
+                  <option key={shader}>{shader}</option>
+                )) }
+              </select>
+            )}
+          { this.state.filter !== 'none' && (
+            <div className="ui__uniformContainer">
+            { Object.keys(this.state.filter.uniforms).map( (uniform) => (
+              <div key={uniform}>
+                <span>{uniform}</span>
+                <input data-uniforms={uniform} onChange={this.onUniformsChange}
+                  type="range"
+                  defaultValue={this.state.filter.uniforms[uniform].default}
+                  min={this.state.filter.uniforms[uniform].min}
+                  max={this.state.filter.uniforms[uniform].max}
+                  step={0.01}/>
+              </div>
+            )) }
             </div>
-          )) }
+          ) }
           </div>
-        ) }
         </div>
 
         <ThreeProject
-          zoomOut={this.state.zoomOut}
+          zoomOut={this.props.zoomOut}
           tileCount={this.state.tileCount}
           selectedObject={this.state.selectedObject}
           shuffle={this.state.shuffle}
@@ -166,4 +182,10 @@ class HomePage extends React.Component{
   };
 }
 
-export default HomePage;
+const mapStateToProps = (settings) => {
+  return {
+    zoomOut: settings.zoomOut
+  }
+};
+
+export default connect(mapStateToProps)(HomePage);
