@@ -32,3 +32,12 @@ export const removeActiveShader = (shader) => {
     shader
   }
 }
+
+export const updateShaderUniform = ({shader, uniform, newValue}) => {
+  return{
+    type: 'UPDATE_SHADER_UNIFORM',
+    shader,
+    uniform,
+    newValue
+  }
+}

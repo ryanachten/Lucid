@@ -104,21 +104,22 @@ class ThreeProject extends React.Component {
     const composer = Object.assign(this.state.composer);
     const allPasses = this.state.allShaderPasses;
     const currentPasses = this.state.composer.passes;
-    const renderPass = currentPasses[0]; //save for later
-    const copyPass = currentPasses[currentPasses.length-1]; //save for later
-    const newPasses = [renderPass];
+    const renderPass = currentPasses[0]; //save
+    const copyPass = currentPasses[currentPasses.length-1]; //save
+    const shaderPipeline = [renderPass];
 
     Object.keys(shaders).map( (shader) => {
-      const newShader = shaders[shader];
-      const newPass = allPasses[shader];
-      newPasses.push(newPass);
-      // Object.keys(currentShader).map((uniform) => {
-      //   shaderPass.uniforms[uniform].value = currentShader[uniform];
-      // });
+      const newShader = shaders[shader]; //get active shader name
+      const newPass = allPasses[shader]; //get pass from state
+      shaderPipeline.push(newPass); //push pass to pipeline
+
+      // Iterate through new pass uniforms and assign state vals
+      Object.keys(newShader).map((uniform) => {
+        newPass.uniforms[uniform].value = newShader[uniform];
+      });
     });
-    newPasses.push(copyPass);
-    composer.passes = newPasses;
-    console.log(composer.passes);
+    shaderPipeline.push(copyPass);
+    composer.passes = shaderPipeline; //assign pipeline to composer
     this.setState(() => ({
       composer
     }));

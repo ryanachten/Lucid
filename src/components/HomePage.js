@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { setZoomOut, setTileCount, setGeometryShape, addActiveShader, removeActiveShader } from '../actions/settings';
+import { setZoomOut, setTileCount, setGeometryShape} from '../actions/settings';
 
 import ThreeProject from './ThreeProject';
 import LoadingScreen from './LoadingScreen';
-import initShaders from '../three/initShaders';
 
 import FullScreenButton from './FullScreenButton';
 import ShaderItem from './ShaderItem';
@@ -19,16 +18,9 @@ class HomePage extends React.Component{
     this.onObjectChange = this.onObjectChange.bind(this);
     this.onShuffleChange = this.onShuffleChange.bind(this);
 
-    this.onUniformsChange = this.onUniformsChange.bind(this);
-
     this.state = {
       allShaders: this.props.allShaders
     }
-  }
-
-  componentDidMount(){
-    const shaders = initShaders();
-    this.setState({ shaders });
   }
 
   onZoomOutToggle(){
@@ -54,13 +46,6 @@ class HomePage extends React.Component{
     // TODO
   }
 
-  onUniformsChange(e){
-    const uniformName = e.target.getAttribute('data-uniforms');
-    const newAmount = e.target.value;
-    const newFilter = this.state.filter;
-    newFilter.shader.uniforms[uniformName].value = newAmount;
-  }
-
   render = () => {
 
     return(
@@ -83,24 +68,6 @@ class HomePage extends React.Component{
           </select>
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle</button>
-          {/* <div className="ui_filterContainer">
-
-          { this.state.filter !== 'none' && (
-            <div className="ui__uniformContainer">
-            { Object.keys(this.state.filter.uniforms).map( (uniform) => (
-              <div key={uniform}>
-                <span>{uniform}</span>
-                <input data-uniforms={uniform} onChange={this.onUniformsChange}
-                  type="range"
-                  defaultValue={this.state.filter.uniforms[uniform].default}
-                  min={this.state.filter.uniforms[uniform].min}
-                  max={this.state.filter.uniforms[uniform].max}
-                  step={0.01}/>
-              </div>
-            )) }
-            </div>
-          ) }
-          </div> */}
 
           <div className="ui_shaderContainer">
             { Object.keys(this.state.allShaders).map( (shader) => (

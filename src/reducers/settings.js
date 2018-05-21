@@ -99,6 +99,18 @@ export default (state = settingsReducerDefaultState, action) => {
       }
       break;
 
+    case 'UPDATE_SHADER_UNIFORM':
+      activeShaders = JSON.parse(state.shaderSettings.activeShaders);
+      activeShaders[action.shader][action.uniform] = action.newValue
+      return {
+        ...state,
+        shaderSettings: {
+          ...shaderSettings,
+          activeShaders: JSON.stringify(activeShaders)
+        }
+      }
+      break;
+
     default:
       return state;
   }
