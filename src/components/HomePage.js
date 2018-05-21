@@ -9,6 +9,7 @@ import LoadingScreen from './LoadingScreen';
 import initShaders from '../three/initShaders';
 
 import FullScreenButton from './FullScreenButton';
+import ShaderItem from './ShaderItem';
 
 class HomePage extends React.Component{
   constructor(props){
@@ -17,7 +18,7 @@ class HomePage extends React.Component{
     this.onTileCountChange = this.onTileCountChange.bind(this);
     this.onObjectChange = this.onObjectChange.bind(this);
     this.onShuffleChange = this.onShuffleChange.bind(this);
-    this.onToggleFilter = this.onToggleFilter.bind(this);
+
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
     this.state = {
@@ -51,26 +52,6 @@ class HomePage extends React.Component{
 
   onShuffleChange(){
     // TODO
-  }
-
-  onToggleFilter(e){
-    if (e.target.checked) {
-      const name = e.target.value;
-      const uniforms = this.props.allShaders[e.target.value];
-      const uniformDefaults = {};
-      Object.keys(uniforms).map( (uniform) => {
-        uniformDefaults[uniform] = uniforms[uniform].default
-      });
-      this.props.dispatch(
-        addActiveShader({ name, uniformDefaults })
-      );
-    }
-    else{
-      const name = e.target.value;
-      this.props.dispatch(
-        removeActiveShader(name)
-      );
-    }
   }
 
   onUniformsChange(e){
@@ -123,9 +104,8 @@ class HomePage extends React.Component{
 
           <div className="ui_shaderContainer">
             { Object.keys(this.state.allShaders).map( (shader) => (
-              <div key={shader}>
-                <span>{shader}</span><input type="checkbox" value={shader} onChange={this.onToggleFilter}/>
-              </div>
+              // import and instant shader item thing
+              <ShaderItem key={shader} shader={shader} uniforms={this.state.allShaders[shader]}/>
             )) }
 
           </div>
@@ -137,7 +117,6 @@ class HomePage extends React.Component{
           selectedObject={this.props.geometryShape}
           shuffle={this.state.shuffle}
           activeShaders={this.props.activeShaders}
-          // filter={this.state.filter}
         />
       </div>
     );
