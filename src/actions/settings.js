@@ -18,3 +18,17 @@ export const setGeometryShape = (geometryShape) => {
     geometryShape
   }
 }
+
+export const addActiveShader = ({name, uniformDefaults}) => {
+  return{
+    type: 'ADD_ACTIVE_SHADER',
+    name, uniformDefaults
+  }
+}
+
+export const removeActiveShader = (shader) => {
+  return{
+    type: 'REMOVE_ACTIVE_SHADER',
+    shader
+  }
+}

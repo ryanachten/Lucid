@@ -1,25 +1,27 @@
 import React from 'react';
 import * as THREE from 'three';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 
 import initMedia from '../three/initMedia';
 import initThree from '../three/initThree';
+import initShaders from '../three/initShaders'
 import animation from '../three/animation';
-// import init from '../three/wholeThing';
 
 class ThreeProject extends React.Component {
   constructor(props) {
     super(props)
-
     this.onWindowResize = this.onWindowResize.bind(this);
     this.getDeviceOrientation = this.getDeviceOrientation.bind(this);
     this.animate = this.animate.bind(this);
     this.handleZoomOut = this.handleZoomOut.bind(this);
     this.handleTileCount = this.handleTileCount.bind(this);
-    this.handleSelectedFilter = this.handleSelectedFilter.bind(this);
+    // this.handleSelectedFilter = this.handleSelectedFilter.bind(this);
+    this.handleActiveShaders = this.handleActiveShaders.bind(this);
 
     this.state = {
-      orientation: undefined
+      orientation: undefined,
+      allShaderPasses: undefined
     };
   }
 
@@ -29,6 +31,8 @@ class ThreeProject extends React.Component {
           // Adds assets from three.js setup to state
           this.setState( () => ({ ...assets }) );
           // Add resize and device orientation events
+          const allShaderPasses = initShaders();
+          this.setState(() => ({allShaderPasses}));
           window.addEventListener( 'resize', this.onWindowResize, false );
           window.addEventListener("deviceorientation", this.getDeviceOrientation, true);
           // Then starts animation
@@ -47,8 +51,8 @@ class ThreeProject extends React.Component {
     if (nextProps.selectedObject !== this.props.selectedObject) {
       this.handleSelectedObject(nextProps.selectedObject);
     }
-    if (nextProps.filter !== this.props.filter) {
-      this.handleSelectedFilter(nextProps.filter);
+    if (nextProps.activeShaders !== this.props.activeShaders) {
+      this.handleActiveShaders(JSON.parse(nextProps.activeShaders));
     }
   }
 
@@ -96,27 +100,28 @@ class ThreeProject extends React.Component {
     this.setState( () => { shape });
   }
 
-  handleSelectedFilter(filter){
-    const composer = this.state.composer;
-    let currentFilter = filter.shader;
+  handleActiveShaders(shaders){
+    const composer = Object.assign(this.state.composer);
+    const allPasses = this.state.allShaderPasses;
+    const currentPasses = this.state.composer.passes;
+    const renderPass = currentPasses[0]; //save for later
+    const copyPass = currentPasses[currentPasses.length-1]; //save for later
+    const newPasses = [renderPass];
 
-    // If no filter has been applied and a new filter
-    // is not 'none'
-    if (composer.passes.length === 2 && currentFilter !== undefined){
-      composer.passes.splice(1, 0, currentFilter);
-    }
-    // If there's already a filter and the new one is none
-    // replace the filter
-    else if (composer.passes.length === 3 && currentFilter !== undefined){
-      composer.passes.splice(1, 1, currentFilter);
-    }
-    // If there's already a filter and the new one is none
-    // remove the filter
-    else if (composer.passes.length === 3 && currentFilter === undefined) {
-      composer.passes.splice(1, 1);
-    }
-
-    this.setState( () => { composer });
+    Object.keys(shaders).map( (shader) => {
+      const newShader = shaders[shader];
+      const newPass = allPasses[shader];
+      newPasses.push(newPass);
+      // Object.keys(currentShader).map((uniform) => {
+      //   shaderPass.uniforms[uniform].value = currentShader[uniform];
+      // });
+    });
+    newPasses.push(copyPass);
+    composer.passes = newPasses;
+    console.log(composer.passes);
+    this.setState(() => ({
+      composer
+    }));
   }
 
   start() {
@@ -150,4 +155,4 @@ class ThreeProject extends React.Component {
   }
 }
 
-export default ThreeProject;
+export default connect()(ThreeProject);

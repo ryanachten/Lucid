@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { setZoomOut, setTileCount, setGeometryShape } from '../actions/settings';
+import { setZoomOut, setTileCount, setGeometryShape, addActiveShader, removeActiveShader } from '../actions/settings';
 
 import ThreeProject from './ThreeProject';
 import LoadingScreen from './LoadingScreen';
@@ -18,13 +17,11 @@ class HomePage extends React.Component{
     this.onTileCountChange = this.onTileCountChange.bind(this);
     this.onObjectChange = this.onObjectChange.bind(this);
     this.onShuffleChange = this.onShuffleChange.bind(this);
-    this.onFilterChange = this.onFilterChange.bind(this);
+    this.onToggleFilter = this.onToggleFilter.bind(this);
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
     this.state = {
-      shuffle: false,
-      filter: 'none',
-      activeFilters: {}
+      allShaders: this.props.allShaders
     }
   }
 
@@ -50,24 +47,30 @@ class HomePage extends React.Component{
     this.props.dispatch(
       setGeometryShape(e.target.value)
     );
-    // this.setState( () => ({
-    //   selectedObject: $('.ui__objectSelect')[0].value
-    // }));
   }
 
   onShuffleChange(){
-    this.setState( (prevState) => ({
-      shuffle: !prevState.shuffle
-    }));
-    $('.ui__objShuffle').toggleClass('active');
+    // TODO
   }
 
-  onFilterChange(){
-    const filterName = $('.ui__filterSelect')[0].value;
-    const filter = this.state.shaders[filterName];
-    this.setState( () => ({
-        filter
-    }));
+  onToggleFilter(e){
+    if (e.target.checked) {
+      const name = e.target.value;
+      const uniforms = this.props.allShaders[e.target.value];
+      const uniformDefaults = {};
+      Object.keys(uniforms).map( (uniform) => {
+        uniformDefaults[uniform] = uniforms[uniform].default
+      });
+      this.props.dispatch(
+        addActiveShader({ name, uniformDefaults })
+      );
+    }
+    else{
+      const name = e.target.value;
+      this.props.dispatch(
+        removeActiveShader(name)
+      );
+    }
   }
 
   onUniformsChange(e){
@@ -99,15 +102,8 @@ class HomePage extends React.Component{
           </select>
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle</button>
-          <div className="ui_filterContainer">
-            { this.state.shaders && (
-              <select className="ui__filterSelect" defaultValue="none"
-                onChange={this.onFilterChange}>
-                { Object.keys(this.state.shaders).map( (shader) => (
-                  <option key={shader}>{shader}</option>
-                )) }
-              </select>
-            )}
+          {/* <div className="ui_filterContainer">
+
           { this.state.filter !== 'none' && (
             <div className="ui__uniformContainer">
             { Object.keys(this.state.filter.uniforms).map( (uniform) => (
@@ -123,6 +119,15 @@ class HomePage extends React.Component{
             )) }
             </div>
           ) }
+          </div> */}
+
+          <div className="ui_shaderContainer">
+            { Object.keys(this.state.allShaders).map( (shader) => (
+              <div key={shader}>
+                <span>{shader}</span><input type="checkbox" value={shader} onChange={this.onToggleFilter}/>
+              </div>
+            )) }
+
           </div>
         </div>
 
@@ -131,7 +136,8 @@ class HomePage extends React.Component{
           tileCount={this.props.tileCount}
           selectedObject={this.props.geometryShape}
           shuffle={this.state.shuffle}
-          filter={this.state.filter}
+          activeShaders={this.props.activeShaders}
+          // filter={this.state.filter}
         />
       </div>
     );
@@ -142,7 +148,9 @@ const mapStateToProps = (settings) => {
   return {
     zoomOut: settings.zoomOut,
     tileCount: settings.textureSettings.tileCount,
-    geometryShape: settings.shapeSettings.geometryShape
+    geometryShape: settings.shapeSettings.geometryShape,
+    allShaders: settings.shaderSettings.defaultShaderUniforms,
+    activeShaders: settings.shaderSettings.activeShaders
   }
 };
 
