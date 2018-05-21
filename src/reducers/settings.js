@@ -36,7 +36,9 @@ defaultShaderSettings:{
 
 const settingsReducerDefaultState = {
   zoomOut: false,
-
+  textureSettings: {
+    tileCount: 4
+  }
 
 }
 
@@ -47,6 +49,17 @@ export default (state = settingsReducerDefaultState, action) => {
       return {
         ...state,
         zoomOut: action.zoomOut
+      }
+      break;
+
+    case 'SET_TILE_COUNT':
+      const textureSettings = state.textureSettings;
+      return {
+        ...state,
+        textureSettings: {
+          ...textureSettings,
+          tileCount: action.tileCount
+        }
       }
       break;
 

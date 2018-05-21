@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { setZoomOut } from '../actions/settings';
+import { setZoomOut, setTileCount } from '../actions/settings';
 
 import ThreeProject from './ThreeProject';
 import LoadingScreen from './LoadingScreen';
@@ -22,9 +22,6 @@ class HomePage extends React.Component{
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
     this.state = {
-      fullscreen: false,
-      zoomOut: this.props.zoomOut,
-      tileCount: 4,
       selectedObject: 'sphere',
       shuffle: false,
       filter: 'none',
@@ -45,9 +42,9 @@ class HomePage extends React.Component{
   }
 
   onTileCountChange(){
-    this.setState( () => ({
-      tileCount: $('.ui__tileCount')[0].value
-    }));
+    this.props.dispatch(
+      setTileCount($('.ui__tileCount')[0].value)
+    );
   }
 
   onObjectChange(){
@@ -129,7 +126,7 @@ class HomePage extends React.Component{
 
         <ThreeProject
           zoomOut={this.props.zoomOut}
-          tileCount={this.state.tileCount}
+          tileCount={this.props.tileCount}
           selectedObject={this.state.selectedObject}
           shuffle={this.state.shuffle}
           filter={this.state.filter}
@@ -141,7 +138,8 @@ class HomePage extends React.Component{
 
 const mapStateToProps = (settings) => {
   return {
-    zoomOut: settings.zoomOut
+    zoomOut: settings.zoomOut,
+    tileCount: settings.textureSettings.tileCount
   }
 };
 

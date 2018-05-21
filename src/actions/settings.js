@@ -4,3 +4,10 @@ export const setZoomOut = (zoomOut) => {
     zoomOut
   }
 };
+
+export const setTileCount = (tileCount) => {
+  return{
+    type: 'SET_TILE_COUNT',
+    tileCount
+  }
+};
