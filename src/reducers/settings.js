@@ -36,6 +36,9 @@ defaultShaderSettings:{
 
 const settingsReducerDefaultState = {
   zoomOut: false,
+  shapeSettings: {
+    geometryShape: 'sphere'
+  },
   textureSettings: {
     tileCount: 4
   }
@@ -61,6 +64,17 @@ export default (state = settingsReducerDefaultState, action) => {
           tileCount: action.tileCount
         }
       }
+      break;
+
+    case 'SET_GEOMETRY_SHAPE':
+    const shapeSettings = state.geometrySettings;
+      return{
+        ...state,
+        shapeSettings: {
+          ...shapeSettings,
+          geometryShape: action.geometryShape
+        }
+      };
       break;
 
     default:

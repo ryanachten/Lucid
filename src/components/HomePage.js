@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { setZoomOut, setTileCount } from '../actions/settings';
+import { setZoomOut, setTileCount, setGeometryShape } from '../actions/settings';
 
 import ThreeProject from './ThreeProject';
 import LoadingScreen from './LoadingScreen';
@@ -22,7 +22,6 @@ class HomePage extends React.Component{
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
     this.state = {
-      selectedObject: 'sphere',
       shuffle: false,
       filter: 'none',
       activeFilters: {}
@@ -41,16 +40,19 @@ class HomePage extends React.Component{
     $('.ui__zoomOut').toggleClass('active');
   }
 
-  onTileCountChange(){
+  onTileCountChange(e){
     this.props.dispatch(
-      setTileCount($('.ui__tileCount')[0].value)
+      setTileCount(e.target.value)
     );
   }
 
-  onObjectChange(){
-    this.setState( () => ({
-      selectedObject: $('.ui__objectSelect')[0].value
-    }));
+  onObjectChange(e){
+    this.props.dispatch(
+      setGeometryShape(e.target.value)
+    );
+    // this.setState( () => ({
+    //   selectedObject: $('.ui__objectSelect')[0].value
+    // }));
   }
 
   onShuffleChange(){
@@ -127,7 +129,7 @@ class HomePage extends React.Component{
         <ThreeProject
           zoomOut={this.props.zoomOut}
           tileCount={this.props.tileCount}
-          selectedObject={this.state.selectedObject}
+          selectedObject={this.props.geometryShape}
           shuffle={this.state.shuffle}
           filter={this.state.filter}
         />
@@ -139,7 +141,8 @@ class HomePage extends React.Component{
 const mapStateToProps = (settings) => {
   return {
     zoomOut: settings.zoomOut,
-    tileCount: settings.textureSettings.tileCount
+    tileCount: settings.textureSettings.tileCount,
+    geometryShape: settings.shapeSettings.geometryShape
   }
 };
 

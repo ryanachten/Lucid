@@ -11,3 +11,10 @@ export const setTileCount = (tileCount) => {
     tileCount
   }
 };
+
+export const setGeometryShape = (geometryShape) => {
+  return{
+    type: 'SET_GEOMETRY_SHAPE',
+    geometryShape
+  }
+}
