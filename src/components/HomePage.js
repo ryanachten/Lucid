@@ -71,7 +71,7 @@ class HomePage extends React.Component{
     return(
       <div>
         <div className="ui__container">
-
+          
           <FullScreenButton />
           <button className="ui__objShuffle"
             onClick={this.onShuffleChange}>Shuffle Mode</button>

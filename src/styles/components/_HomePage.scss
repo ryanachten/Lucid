@@ -4,8 +4,9 @@ body{
 
 .ui__container{
   position: fixed;
-  right: 0px;
+  left: 0px;
   padding: 10px;
+  background-color: $bg-color;
 }
 button.active{
   background: pink;

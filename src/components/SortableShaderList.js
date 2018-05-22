@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { connect } from 'react-redux';
-import { SortableContainer, SortableElement,
+import { SortableContainer, SortableElement, SortableHandle,
   arrayMove } from 'react-sortable-hoc';
 import $ from 'jquery';
 
@@ -9,10 +9,12 @@ import { updateShaderOrder } from '../actions/settings';
 
 import ShaderItem from './ShaderItem';
 
+const DragHandle = SortableHandle(() => <span>::</span>);
 
 const SortableItem = SortableElement(({shader, uniforms}) => {
   return (
     <li>
+      <DragHandle />
       <ShaderItem key={shader}
           shader={shader}
           uniforms={uniforms}
@@ -66,7 +68,8 @@ class SortableShaderList extends Component {
   };
 
   render() {
-    return <SortableList shaders={this.state.shaders} onSortEnd={this.onSortEnd}/>;
+    return <SortableList shaders={this.state.shaders} onSortEnd={this.onSortEnd}
+            useDragHandle={true}/>;
   }
 }
 

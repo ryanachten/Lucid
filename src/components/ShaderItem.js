@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Switch } from 'rmwc/Switch';
+import '@material/switch/dist/mdc.switch.min.css';
+import { Slider } from 'rmwc/Slider';
+import '@material/slider/dist/mdc.slider.min.css';
+
 import { addActiveShader, removeActiveShader, updateShaderUniform } from '../actions/settings';
 
 class ShaderItem extends React.Component{
@@ -47,8 +52,8 @@ class ShaderItem extends React.Component{
   }
 
   onUniformsChange(e){
-    const uniform = e.target.getAttribute('data-uniform');
-    const newValue = e.target.value;
+    const uniform = e.detail.props['data-uniform'];
+    const newValue = e.detail.value;
     this.props.dispatch(
       updateShaderUniform({
         shader: this.props.shader,
@@ -59,10 +64,11 @@ class ShaderItem extends React.Component{
   }
 
   render(){
+
     return(
       <div>
         <span>{this.props.shader}</span>
-        <input type="checkbox" value={this.props.shader}
+        <Switch type="checkbox" value={this.props.shader}
           checked={this.state.shaderActive} onChange={this.onToggleFilter}
         />
         {this.state.shaderActive && (
@@ -70,12 +76,12 @@ class ShaderItem extends React.Component{
             { Object.keys(this.props.uniforms).map( (uniform) => (
               <div key={uniform}>
                 <span>{uniform}</span>
-                <input type="range"
+                <Slider type="range"
                   data-uniform={uniform}
                   min={this.props.uniforms[uniform].min}
                   max={this.props.uniforms[uniform].max}
-                  defaultValue={this.props.uniforms[uniform].default}
-                  onChange={this.onUniformsChange}
+                  value={this.props.activeShaders[this.props.shader][uniform]}
+                  onInput={this.onUniformsChange}
                   step={0.01}
                 />
               </div>
