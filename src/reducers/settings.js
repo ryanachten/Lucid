@@ -1,10 +1,13 @@
 const settingsReducerDefaultState = {
   zoomOut: false,
   shapeSettings: {
-    geometryShape: 'sphere'
+    geometryShape: 'sphere',
   },
   textureSettings: {
-    tileCount: 4
+    tileCount: 4,
+    rotateTexture: false,
+    rotateX: 0.01,
+    rotateY: 0.01
   },
   shaderSettings: {
     activeShaders: undefined,
@@ -46,12 +49,44 @@ export default (state = settingsReducerDefaultState, action) => {
       break;
 
     case 'SET_TILE_COUNT':
-      const textureSettings = state.textureSettings;
+      let textureSettings = state.textureSettings;
       return {
         ...state,
         textureSettings: {
           ...textureSettings,
           tileCount: action.tileCount
+        }
+      }
+      break;
+
+    case 'TOGGLE_TEXTURE_ROTATION':
+      textureSettings = state.textureSettings;
+      return {
+        ...state,
+        textureSettings: {
+          ...textureSettings,
+          rotateTexture: action.rotate
+        }
+      }
+      break;
+
+    case 'SET_TEXTURE_ROTATION':
+      textureSettings = state.textureSettings;
+      if (action.axis === 'x') {
+        return {
+          ...state,
+          textureSettings: {
+            ...textureSettings,
+            rotateX: action.speed
+          }
+        }
+      }else if (action.axis === 'y') {
+        return {
+          ...state,
+          textureSettings: {
+            ...textureSettings,
+            rotateY: action.speed
+          }
         }
       }
       break;

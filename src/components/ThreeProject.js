@@ -138,7 +138,9 @@ class ThreeProject extends React.Component {
   animate() {
 
     animation({
-      ...this.state
+      ...this.state,
+      rotateTexture: this.props.rotateTexture,
+      rotateTextureSpeed: this.props.rotateTextureSpeed
     });
 
     this.frameId = window.requestAnimationFrame(this.animate);
@@ -155,5 +157,6 @@ class ThreeProject extends React.Component {
     )
   }
 }
+
 
 export default connect()(ThreeProject);

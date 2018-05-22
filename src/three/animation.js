@@ -5,7 +5,9 @@ function animate({
     stats, scene, camera, stereoCamera, renderer,
     texture, material, shape, composer, renderPass,
     // Device orientation
-    orientation
+    orientation,
+    // Texture settings
+    rotateTexture, rotateTextureSpeed
   }) {
 
   stats.begin();
@@ -20,14 +22,20 @@ function animate({
     shape.rotation.y = alpha;
     shape.rotation.z = beta;
   }
+  // If on a desktop / device w/ no orientation; animate
   else{
     shape.rotation.x += 0.01;
     shape.rotation.y += 0.01;
     shape.rotation.z += 0.01;
   }
 
-  texture.offset.x -= 0.01;
-  texture.offset.y -= 0.01;
+  if (rotateTexture) {
+    texture.offset.x -= rotateTextureSpeed.x;
+    texture.offset.y -= rotateTextureSpeed.y;
+  }else{
+    texture.offset.x = 0;
+    texture.offset.y = 0;
+  }
 
   const size = renderer.getSize();
   stereoCamera.update(camera);

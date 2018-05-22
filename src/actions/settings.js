@@ -12,6 +12,21 @@ export const setTileCount = (tileCount) => {
   }
 };
 
+export const toggleTextureRotation = (rotate) => {
+  return{
+    type: 'TOGGLE_TEXTURE_ROTATION',
+    rotate
+  }
+};
+
+export const setTextureRotation = ({axis, speed}) => {
+  return{
+    type: 'SET_TEXTURE_ROTATION',
+    axis,
+    speed
+  }
+};
+
 export const setGeometryShape = (geometryShape) => {
   return{
     type: 'SET_GEOMETRY_SHAPE',
