@@ -9,6 +9,7 @@ import LoadingScreen from './LoadingScreen';
 
 import FullScreenButton from './FullScreenButton';
 import ShaderItem from './ShaderItem';
+import SortableShaderList from './SortableShaderList';
 
 class HomePage extends React.Component{
   constructor(props){
@@ -70,10 +71,13 @@ class HomePage extends React.Component{
             onClick={this.onShuffleChange}>Shuffle</button>
 
           <div className="ui_shaderContainer">
-            { Object.keys(this.state.allShaders).map( (shader) => (
+            <SortableShaderList shaders={this.state.allShaders}/>
+            {/* { Object.keys(this.state.allShaders).map( (shader) => (
               // import and instant shader item thing
-              <ShaderItem key={shader} shader={shader} uniforms={this.state.allShaders[shader]}/>
-            )) }
+
+              // <ShaderItem key={shader} shader={shader} uniforms={this.state.allShaders[shader]}/>
+
+            )) } */}
 
           </div>
         </div>

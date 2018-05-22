@@ -9,8 +9,12 @@ class ShaderItem extends React.Component{
     this.onToggleFilter = this.onToggleFilter.bind(this);
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
+    // Checks to see if shader is active in store
+    // to provide accurate defaults
+    const shaderIsActive = props.activeShaders.hasOwnProperty(props.shader);
+
     this.state = {
-      shaderActive: false
+      shaderActive: shaderIsActive
     }
   }
 
@@ -45,7 +49,6 @@ class ShaderItem extends React.Component{
   onUniformsChange(e){
     const uniform = e.target.getAttribute('data-uniform');
     const newValue = e.target.value;
-    console.log();
     this.props.dispatch(
       updateShaderUniform({
         shader: this.props.shader,
@@ -59,7 +62,9 @@ class ShaderItem extends React.Component{
     return(
       <div>
         <span>{this.props.shader}</span>
-        <input type="checkbox" value={this.props.shader} onChange={this.onToggleFilter}/>
+        <input type="checkbox" value={this.props.shader}
+          checked={this.state.shaderActive} onChange={this.onToggleFilter}
+        />
         {this.state.shaderActive && (
           <div>
             { Object.keys(this.props.uniforms).map( (uniform) => (
@@ -82,4 +87,14 @@ class ShaderItem extends React.Component{
   }
 }
 
-export default connect()(ShaderItem);
+const mapStateToProps = (settings) => {
+  let activeShaders = {};
+  if (settings.shaderSettings.activeShaders) {
+    activeShaders = JSON.parse(settings.shaderSettings.activeShaders)
+  }
+  return {
+    activeShaders
+  }
+};
+
+export default connect(mapStateToProps)(ShaderItem);
