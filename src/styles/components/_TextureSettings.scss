@@ -1,0 +1,10 @@
+.texture__tileCountContainer, .texture__rotateItem{
+  align-items: center;
+  display: flex;
+}
+.texture__tileCountLabel, .texture__rotateLabel{
+  margin-right: 10px;
+}
+.texture__tileCountSlider, .texture__rotateSlider{
+  flex-grow: 1;
+}

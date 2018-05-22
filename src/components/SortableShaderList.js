@@ -5,7 +5,6 @@ import { SortableContainer, SortableElement, SortableHandle,
   arrayMove } from 'react-sortable-hoc';
 import $ from 'jquery';
 import { Icon } from 'rmwc/Icon';
-// import '@material/icon/dist/mdc.icon.min.css';
 
 import { updateShaderOrder } from '../actions/settings';
 
