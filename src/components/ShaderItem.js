@@ -66,7 +66,7 @@ class ShaderItem extends React.Component{
   render(){
 
     return(
-      <div>
+      <div className="shaderItem__content">
         <span>{this.props.shader}</span>
         <Switch type="checkbox" value={this.props.shader}
           checked={this.state.shaderActive} onChange={this.onToggleFilter}
@@ -74,9 +74,10 @@ class ShaderItem extends React.Component{
         {this.state.shaderActive && (
           <div>
             { Object.keys(this.props.uniforms).map( (uniform) => (
-              <div key={uniform}>
-                <span>{uniform}</span>
+              <div className="shaderItem__uniformContainer" key={uniform}>
+                <span className="shaderItem__uniformLabel">{uniform}</span>
                 <Slider type="range"
+                  className="shaderItem__uniformSlider"
                   data-uniform={uniform}
                   min={this.props.uniforms[uniform].min}
                   max={this.props.uniforms[uniform].max}

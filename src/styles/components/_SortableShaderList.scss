@@ -1,0 +1,31 @@
+.shaderList__container{
+  list-style: none;
+  padding-left: 0;
+}
+
+.shaderList__item{
+  background-color: $bg-color;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+  border-radius: 4px;
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.shaderItem__content{
+  display: inline-block;
+  flex-grow: 1;
+}
+
+.shaderItem__uniformContainer{
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+.shaderItem__uniformLabel{
+  margin-right: 10px;
+}
+.shaderItem__uniformSlider{
+  flex-grow: 1;
+}

@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import { SortableContainer, SortableElement, SortableHandle,
   arrayMove } from 'react-sortable-hoc';
 import $ from 'jquery';
+import { Icon } from 'rmwc/Icon';
+// import '@material/icon/dist/mdc.icon.min.css';
 
 import { updateShaderOrder } from '../actions/settings';
 
 import ShaderItem from './ShaderItem';
 
-const DragHandle = SortableHandle(() => <span>::</span>);
+const DragHandle = SortableHandle(() => <Icon strategy="ligature" use="reorder" />);
 
 const SortableItem = SortableElement(({shader, uniforms}) => {
   return (
-    <li>
+    <li className="shaderList__item">
       <DragHandle />
       <ShaderItem key={shader}
           shader={shader}
@@ -25,7 +27,7 @@ const SortableItem = SortableElement(({shader, uniforms}) => {
 
 const SortableList = SortableContainer(({shaders}) => {
   return (
-    <ul>
+    <ul className="shaderList__container">
       {Object.keys(shaders).map((shader, index) => (
         <SortableItem key={`item-${index}`} index={index} shader={shader} uniforms={shaders[shader]}/>
       ))}
