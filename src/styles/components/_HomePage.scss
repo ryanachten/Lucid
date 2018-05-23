@@ -3,6 +3,8 @@ body{
 }
 
 .ui__openMenuButton, .fullscreen__toggle{
+  background-image: $main-gradient;
+  border-radius: 50%;
   color: $bg-color;
   font-size: 30px;
   margin: 20px;
@@ -25,6 +27,8 @@ body{
   width: 100%;
 }
 .onboard__message{
+  background-image: $main-gradient-reverse;
+padding: 20px;
   display: inline-block;
   margin: 0 20px;
 }
@@ -41,7 +45,9 @@ body{
   overflow-y: auto;
   position: fixed;
 }
-
+.ui__toolbar{
+  background-image: $main-gradient;
+}
 .ui__tabbar{
   margin: 20px;
 }

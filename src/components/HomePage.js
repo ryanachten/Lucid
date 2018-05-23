@@ -72,10 +72,10 @@ class HomePage extends React.Component{
         {this.state.menuOpen && (
           <div className="ui__container">
 
-            <Toolbar>
+            <Toolbar className="ui__toolbar">
               <ToolbarRow>
                 <ToolbarSection alignStart>
-                  <ToolbarTitle>Settings</ToolbarTitle>
+                  <ToolbarTitle>Lucid Settings</ToolbarTitle>
                 </ToolbarSection>
                 <ToolbarSection alignEnd>
                   <ToolbarIcon use="close" onClick={this.onCloseMenu}/>
