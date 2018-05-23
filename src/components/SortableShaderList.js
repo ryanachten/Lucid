@@ -10,7 +10,9 @@ import { updateShaderOrder } from '../actions/settings';
 
 import ShaderItem from './ShaderItem';
 
-const DragHandle = SortableHandle(() => <Icon strategy="ligature" use="reorder" />);
+const DragHandle = SortableHandle(
+  () => <Icon className="shaderList__itemHandle" strategy="ligature" use="reorder" />
+);
 
 const SortableItem = SortableElement(({shader, uniforms}) => {
   return (
@@ -27,7 +29,6 @@ const SortableItem = SortableElement(({shader, uniforms}) => {
 const SortableList = SortableContainer(({shaders}) => {
   return (
     <div>
-      <h2>Shader Settings</h2>
       <ul className="shaderList__container">
         {Object.keys(shaders).map((shader, index) => (
           <SortableItem key={`item-${index}`} index={index} shader={shader} uniforms={shaders[shader]}/>

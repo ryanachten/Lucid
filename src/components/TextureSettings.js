@@ -38,7 +38,6 @@ class TextureSettings extends React.Component{
   render(){
     return(
       <div className="texture__container">
-        <h2>Texture Settings</h2>
         <div className="texture__tileCountContainer">
           <span className="texture__tileCountLabel">Tile Repetitions</span>
           <Slider className="texture__tileCountSlider" type="range"

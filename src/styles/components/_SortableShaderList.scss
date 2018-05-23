@@ -3,6 +3,12 @@
   padding-left: 0;
 }
 
+.shaderList__itemHandle{
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
 .shaderList__item{
   background-color: $bg-color;
   box-shadow: 0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
@@ -16,6 +22,7 @@
 .shaderItem__content{
   display: inline-block;
   flex-grow: 1;
+  margin-top: 3px;
 }
 
 .shaderItem__uniformContainer{

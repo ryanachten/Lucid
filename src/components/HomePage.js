@@ -73,38 +73,40 @@ class HomePage extends React.Component{
             </Toolbar>
 
             <TabBar
-            activeTabIndex={this.state.activeTabIndex}
-            onChange={evt => this.setState({'activeTabIndex': evt.target.value})}>
-              <Tab>
+              activeTabIndex={this.state.activeTabIndex}
+              className="ui__tabbar"
+              onChange={evt => this.setState({'activeTabIndex': evt.target.value})}>
+              <Tab className="ui__tab">
                 <TabIcon>grain</TabIcon><TabIconText>Shape</TabIconText>
               </Tab>
-              <Tab>
+              <Tab className="ui__tab">
                 <TabIcon>texture</TabIcon><TabIconText>Texture</TabIconText>
               </Tab>
-              <Tab>
+              <Tab className="ui__tab">
                 <TabIcon>blur_on</TabIcon><TabIconText>Shaders</TabIconText>
               </Tab>
             </TabBar>
+            <div className="ui__settingsContainer">
+              { this.state.activeTabIndex === 0 && (
+                <ShapeSettings
+                  zoomOut={this.props.zoomOut}
+                  geometryShape={this.props.geometryShape}
+                />
+              )}
 
-            { this.state.activeTabIndex === 0 && (
-              <ShapeSettings
-                zoomOut={this.props.zoomOut}
-                geometryShape={this.props.geometryShape}
-              />
-            )}
+              { this.state.activeTabIndex === 1 && (
+                <TextureSettings
+                  tileCount={this.props.tileCount}
+                  rotateTexture={this.props.rotateTexture}
+                  rotateTextureX={this.props.rotateTextureX}
+                  rotateTextureY={this.props.rotateTextureY}
+                />
+              )}
 
-            { this.state.activeTabIndex === 1 && (
-              <TextureSettings
-                tileCount={this.props.tileCount}
-                rotateTexture={this.props.rotateTexture}
-                rotateTextureX={this.props.rotateTextureX}
-                rotateTextureY={this.props.rotateTextureY}
-              />
-            )}
-
-            { this.state.activeTabIndex === 2 && (
-              <SortableShaderList shaders={this.props.allShaders}/>
-            )}
+              { this.state.activeTabIndex === 2 && (
+                <SortableShaderList shaders={this.props.allShaders}/>
+              )}
+            </div>
           </div>
         )}
 

@@ -31,7 +31,6 @@ class ShapeSettings extends React.Component{
   render(){
     return(
       <div className="shape__container">
-        <h2>Shape Settings</h2>
         <IconToggle className="shape__zoomOut"
           on={{label: 'Exit overview', content: 'zoom_in'}}
           off={{label: 'Enter overview', content: 'zoom_out'}}
