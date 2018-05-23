@@ -26,10 +26,14 @@ body{
   text-align: center;
   width: 100%;
 }
+.onboard__logo{
+  height: 100px;
+  width: 100px;
+}
 .onboard__message{
   background-image: $main-gradient-reverse;
 padding: 20px;
-  display: inline-block;
+  // display: inline-block;
   margin: 0 20px;
 }
 .onboard__icon{
