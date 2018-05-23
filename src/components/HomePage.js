@@ -138,12 +138,12 @@ class HomePage extends React.Component{
 const mapStateToProps = (settings) => {
   return {
     fullscreenMode: settings.fullscreenMode,
-    zoomOut: settings.zoomOut,
+    zoomOut: settings.shapeSettings.zoomOut,
+    geometryShape: settings.shapeSettings.geometryShape,
     tileCount: settings.textureSettings.tileCount,
     rotateTexture: settings.textureSettings.rotateTexture,
     rotateTextureX: settings.textureSettings.rotateX,
     rotateTextureY: settings.textureSettings.rotateY,
-    geometryShape: settings.shapeSettings.geometryShape,
     allShaders: settings.shaderSettings.defaultShaderUniforms,
     activeShaders: settings.shaderSettings.activeShaders
   }

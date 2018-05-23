@@ -1,7 +1,7 @@
 const settingsReducerDefaultState = {
   fullscreenMode: false,
-  zoomOut: false,
   shapeSettings: {
+    zoomOut: false,
     geometryShape: 'sphere',
   },
   textureSettings: {
@@ -50,11 +50,26 @@ export default (state = settingsReducerDefaultState, action) => {
       break;
 
     case 'SET_ZOOM_OUT':
+      let shapeSettings = state.shapeSettings;
       return {
         ...state,
-        zoomOut: action.zoomOut
+        shapeSettings: {
+          ...shapeSettings,
+          zoomOut: action.zoomOut
+        }
       }
       break;
+
+    case 'SET_GEOMETRY_SHAPE':
+       shapeSettings = state.shapeSettings;
+        return{
+          ...state,
+          shapeSettings: {
+            ...shapeSettings,
+            geometryShape: action.geometryShape
+          }
+        };
+        break;
 
     case 'SET_TILE_COUNT':
       let textureSettings = state.textureSettings;
@@ -97,17 +112,6 @@ export default (state = settingsReducerDefaultState, action) => {
           }
         }
       }
-      break;
-
-    case 'SET_GEOMETRY_SHAPE':
-    const shapeSettings = state.geometrySettings;
-      return{
-        ...state,
-        shapeSettings: {
-          ...shapeSettings,
-          geometryShape: action.geometryShape
-        }
-      };
       break;
 
     case 'ADD_ACTIVE_SHADER':
