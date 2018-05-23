@@ -1,7 +1,10 @@
 $bg-color: white;
-$body-type: 'Roboto', sans-serif;
+
 $main-gradient: linear-gradient(-225deg, #2CD8D5 0%, #C5C1FF 56%, #FFBAC3 100%);
 $main-gradient-reverse: linear-gradient(225deg, #2CD8D5 0%, #C5C1FF 56%, #FFBAC3 100%);
+
+$body-type: 'Roboto', sans-serif;
+$header-type: 'Chewy', sans-serif;
 
 // Overrides RMWC Material Color Defaults
 :root {

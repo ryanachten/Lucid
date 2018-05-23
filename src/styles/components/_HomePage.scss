@@ -30,6 +30,16 @@ body{
   height: 100px;
   width: 100px;
 }
+.onboard__logotype{
+  font-family: $header-type;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: $main-gradient;
+  color:transparent;
+  font-size: 4rem;
+  letter-spacing: 4px;
+  margin: 0 0 20px 0;
+}
 .onboard__message{
   background-image: $main-gradient-reverse;
 padding: 20px;

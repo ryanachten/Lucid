@@ -57,6 +57,7 @@ class HomePage extends React.Component{
             <div>
               <img className="onboard__logo"
                 src="./img/icons/logo.svg" />
+              <h1 className="onboard__logotype">lucid</h1>
               <h1 className="onboard__message">
                 Press the <Icon className="onboard__icon" strategy="ligature" use="fullscreen" /> button to get started</h1>
             </div>
@@ -71,7 +72,6 @@ class HomePage extends React.Component{
             onClick={this.onOpenMenu}
           />
         )}
-
 
         {this.state.menuOpen && (
           <div className="ui__container">
