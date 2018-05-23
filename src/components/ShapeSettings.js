@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IconToggle } from 'rmwc/IconToggle';
-import '@material/icon-toggle/dist/mdc.icon-toggle.min.css';
+import { Button, ButtonIcon } from 'rmwc/Button';
+import '@material/button/dist/mdc.button.min.css';
 import { Select } from 'rmwc/Select';
 import '@material/select/dist/mdc.select.min.css';
 
@@ -15,10 +15,9 @@ class ShapeSettings extends React.Component{
     this.onObjectChange = this.onObjectChange.bind(this);
   }
 
-  onZoomOutToggle(e){
-    const zoomOut = e.detail.isOn;
+  onZoomOutToggle(){
     this.props.dispatch(
-      setZoomOut(zoomOut)
+      setZoomOut(!this.props.zoomOut)
     );
   }
 
@@ -31,10 +30,26 @@ class ShapeSettings extends React.Component{
   render(){
     return(
       <div className="shape__container">
-        <IconToggle className="shape__zoomOut"
-          on={{label: 'Exit overview', content: 'zoom_in'}}
-          off={{label: 'Enter overview', content: 'zoom_out'}}
-          onChange={this.onZoomOutToggle} />
+
+        {this.props.zoomOut && (
+          <Button
+            className="shape__zoomOut"
+            onClick={this.onZoomOutToggle}
+            unelevated
+            ><ButtonIcon
+            use="zoom_in" /> World View
+          </Button>
+        )}
+        {!this.props.zoomOut && (
+          <Button
+            className="shape__zoomOut"
+            onClick={this.onZoomOutToggle}
+            raised
+            ><ButtonIcon
+            use="zoom_out" /> Get Overview
+          </Button>
+        )}
+
         <Select className="shape__objectSelect"
           value={this.props.geometryShape}
           onChange={this.onObjectChange}
