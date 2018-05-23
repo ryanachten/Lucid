@@ -8,8 +8,8 @@ const initThree = function ({mount, video}) {
     // Add stats for fps reading
     const stats = new Stats();
     stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-    const uiContainer = document.querySelector('.ui__container');
-    uiContainer.prepend( stats.dom );
+    // const uiContainer = document.querySelector('.ui__container');
+    // // uiContainer.prepend( stats.dom );
 
     stats.dom.id = 'stats-graph';
 

@@ -40,7 +40,7 @@ class TextureSettings extends React.Component{
       <div className="texture__container">
         <h2>Texture Settings</h2>
         <div className="texture__tileCountContainer">
-          <span className="texture__tileCountLabel">Rotate Texture</span>
+          <span className="texture__tileCountLabel">Tile Repetitions</span>
           <Slider className="texture__tileCountSlider" type="range"
               min={1} max={20} step={1}
               value={this.props.tileCount}
