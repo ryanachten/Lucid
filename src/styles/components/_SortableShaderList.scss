@@ -7,6 +7,9 @@
   cursor: -moz-grab;
   cursor: -webkit-grab;
   cursor: grab;
+  display: block;
+  margin-right: 10px;
+  margin-top: 11px;
 }
 
 .shaderList__item{
@@ -22,7 +25,16 @@
 .shaderItem__content{
   display: inline-block;
   flex-grow: 1;
-  margin-top: 3px;
+}
+.shaderItem__options{
+  align-items: center;
+  display: flex;
+}
+.shaderItem__label{
+  margin-right: 15px;
+}
+.shaderItem__editToggle{
+  display: inline-block;
 }
 
 .shaderItem__uniformContainer{

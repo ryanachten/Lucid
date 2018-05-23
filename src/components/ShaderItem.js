@@ -4,6 +4,8 @@ import { Switch } from 'rmwc/Switch';
 import '@material/switch/dist/mdc.switch.min.css';
 import { Slider } from 'rmwc/Slider';
 import '@material/slider/dist/mdc.slider.min.css';
+import { IconToggle } from 'rmwc/IconToggle';
+import '@material/icon-toggle/dist/mdc.icon-toggle.min.css';
 
 import { addActiveShader, removeActiveShader, updateShaderUniform } from '../actions/settings';
 
@@ -12,6 +14,7 @@ class ShaderItem extends React.Component{
   constructor(props){
     super(props);
     this.onToggleFilter = this.onToggleFilter.bind(this);
+    this.onToggleEditShader = this.onToggleEditShader.bind(this);
     this.onUniformsChange = this.onUniformsChange.bind(this);
 
     // Checks to see if shader is active in store
@@ -19,6 +22,7 @@ class ShaderItem extends React.Component{
     const shaderIsActive = props.activeShaders.hasOwnProperty(props.shader);
 
     this.state = {
+      editMode: false,
       shaderActive: shaderIsActive
     }
   }
@@ -51,6 +55,13 @@ class ShaderItem extends React.Component{
     }
   }
 
+  onToggleEditShader(e){
+    const editMode = e.detail.isOn;
+    this.setState( () => ({
+      editMode
+    }));
+  }
+
   onUniformsChange(e){
     const uniform = e.detail.props['data-uniform'];
     const newValue = e.detail.value;
@@ -67,11 +78,22 @@ class ShaderItem extends React.Component{
 
     return(
       <div className="shaderItem__content">
-        <span>{this.props.shader}</span>
-        <Switch type="checkbox" value={this.props.shader}
-          checked={this.state.shaderActive} onChange={this.onToggleFilter}
-        />
-        {this.state.shaderActive && (
+        <div className="shaderItem__options">
+          <span className="shaderItem__label">
+            {this.props.shader}
+          </span>
+          <Switch value={this.props.shader}
+            checked={this.state.shaderActive}
+            onChange={this.onToggleFilter} />
+          <IconToggle
+            className="shaderItem__editToggle"
+            on={{label: 'Done editing', content: 'done'}}
+            off={{label: 'Edit settings', content: 'settings'}}
+            disabled={!this.state.shaderActive}
+            onChange={this.onToggleEditShader}
+          />
+        </div>
+        {this.state.shaderActive && this.state.editMode && (
           <div>
             { Object.keys(this.props.uniforms).map( (uniform) => (
               <div className="shaderItem__uniformContainer" key={uniform}>
