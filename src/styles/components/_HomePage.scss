@@ -8,9 +8,8 @@ body{
   padding: 10px;
   background-color: $bg-color;
 }
-button.active{
-  background: pink;
-}
-#video__container{
-  display: none;
+
+.fullscreen__toggle{
+  position: fixed;
+  right: 0px;
 }

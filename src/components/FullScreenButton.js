@@ -1,38 +1,62 @@
 import React from 'react';
 import $ from 'jquery';
+import { IconToggle } from 'rmwc/IconToggle';
+import '@material/icon-toggle/dist/mdc.icon-toggle.min.css';
 
-const onFullscreenToggle = () => {
+class FullScreenButton extends React.Component{
 
-  var doc = window.document;
-  var docEl = doc.documentElement;
+  constructor(props){
+    super(props);
 
-  const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    this.onFullscreenToggle = this.onFullscreenToggle.bind(this);
 
-  // Request full screen
-  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-
-    requestFullScreen.call(docEl);
-
-    // Lock screen to landscape
-    window.screen.orientation.lock('landscape-primary');
-
-    $('.ui__fullscreen').addClass('active');
+    this.state = {
+      fullscreen: false
+    }
   }
-  // Cancel full screen
-  else {
 
-    const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+  onFullscreenToggle(){
 
-    cancelFullScreen.call(doc);
-    window.screen.orientation.unlock();
+    var doc = window.document;
+    var docEl = doc.documentElement;
 
-    $('.ui__fullscreen').removeClass('active');
+    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+
+    // Request full screen
+    if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+
+      requestFullScreen.call(docEl);
+
+      // Lock screen to landscape
+      window.screen.orientation.lock('landscape-primary');
+      this.setState( () => ({
+        fullscreen: true
+      }));
+    }
+
+    // Cancel full screen
+    else {
+
+      const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+      cancelFullScreen.call(doc);
+      window.screen.orientation.unlock();
+
+      this.setState( () => ({
+        fullscreen: false
+      }));
+    }
+  }
+
+  render(){
+    return (
+      <IconToggle className="fullscreen__toggle"
+        on={{label: 'Exit fullscreen', content: 'fullscreen_exit'}}
+        off={{label: 'Enter fullscreen', content: 'fullscreen'}}
+        checked={this.state.fullscreen}
+        onChange={this.onFullscreenToggle} />
+    )
   }
 }
 
-export default () => {
-  return (
-    <button className="ui__fullscreen"
-      onClick={onFullscreenToggle}>Fullscreen</button>
-  )
-}
+export default FullScreenButton;

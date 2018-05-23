@@ -1,6 +1,11 @@
 #stats-graph{
-  right: 0;
   left: unset !important;
+  position: absolute !important;
+  right: 0;
+
+}
+#video__container{
+  display: none;
 }
 
 * {

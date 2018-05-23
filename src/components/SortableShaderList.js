@@ -26,11 +26,14 @@ const SortableItem = SortableElement(({shader, uniforms}) => {
 
 const SortableList = SortableContainer(({shaders}) => {
   return (
-    <ul className="shaderList__container">
-      {Object.keys(shaders).map((shader, index) => (
-        <SortableItem key={`item-${index}`} index={index} shader={shader} uniforms={shaders[shader]}/>
-      ))}
-    </ul>
+    <div>
+      <h2>Shader Settings</h2>
+      <ul className="shaderList__container">
+        {Object.keys(shaders).map((shader, index) => (
+          <SortableItem key={`item-${index}`} index={index} shader={shader} uniforms={shaders[shader]}/>
+        ))}
+      </ul>
+    </div>
   );
 });
 

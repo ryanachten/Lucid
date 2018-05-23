@@ -20,9 +20,9 @@ class HomePage extends React.Component{
 
     return(
       <div>
-        <div className="ui__container">
+        <FullScreenButton />
 
-          <FullScreenButton />
+        <div className="ui__container">
 
           <ShapeSettings
             zoomOut={this.props.zoomOut}
