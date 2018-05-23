@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IconToggle } from 'rmwc/IconToggle';
 import '@material/icon-toggle/dist/mdc.icon-toggle.min.css';
+import { Icon } from 'rmwc/Icon';
 import { Toolbar, ToolbarRow,ToolbarSection,
   ToolbarTitle, ToolbarIcon } from 'rmwc/Toolbar';
 import '@material/toolbar/dist/mdc.toolbar.min.css';
@@ -51,11 +52,12 @@ class HomePage extends React.Component{
           fullscreenMode={this.props.fullscreenMode}
         />
 
-        {/* {!this.props.fullscreenMode && (
-          <div>
-            Turn on fullscreen mode!
+        {!this.props.fullscreenMode && (
+          <div className="onboard__container">
+            <h1 className="onboard__message">
+              Press the <Icon className="onboard__icon" strategy="ligature" use="fullscreen" /> button to get started</h1>
           </div>
-        )} */}
+        )}
 
         {!this.state.menuOpen && (
           <IconToggle

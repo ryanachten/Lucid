@@ -7,15 +7,36 @@ body{
   font-size: 30px;
   margin: 20px;
   position: fixed;
+  z-index: 2;
 }
 
 .fullscreen__toggle{
   right: 0px;
 }
 
+.onboard__container{
+  align-items: center;
+  color: $bg-color;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+.onboard__message{
+  display: inline-block;
+  margin: 0 20px;
+}
+.onboard__icon{
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
 .ui__container{
   background-color: $bg-color;
   left: 0px;
+  margin: 20px;
   max-height: 100%;
   overflow-y: auto;
   position: fixed;
