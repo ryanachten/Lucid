@@ -47,7 +47,15 @@ class HomePage extends React.Component{
 
     return(
       <div>
-        <FullScreenButton />
+        <FullScreenButton
+          fullscreenMode={this.props.fullscreenMode}
+        />
+
+        {/* {!this.props.fullscreenMode && (
+          <div>
+            Turn on fullscreen mode!
+          </div>
+        )} */}
 
         {!this.state.menuOpen && (
           <IconToggle
@@ -57,6 +65,7 @@ class HomePage extends React.Component{
             onClick={this.onOpenMenu}
           />
         )}
+
 
         {this.state.menuOpen && (
           <div className="ui__container">
@@ -128,6 +137,7 @@ class HomePage extends React.Component{
 
 const mapStateToProps = (settings) => {
   return {
+    fullscreenMode: settings.fullscreenMode,
     zoomOut: settings.zoomOut,
     tileCount: settings.textureSettings.tileCount,
     rotateTexture: settings.textureSettings.rotateTexture,

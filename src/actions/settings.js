@@ -1,3 +1,11 @@
+export const setFullScreenMode = (fullscreenMode) => {
+  return{
+    type: 'SET_FULLSCREEN_MODE',
+    fullscreenMode
+  }
+};
+
+
 export const setZoomOut = (zoomOut) => {
   return{
     type: 'SET_ZOOM_OUT',

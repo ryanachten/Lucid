@@ -1,4 +1,5 @@
 const settingsReducerDefaultState = {
+  fullscreenMode: false,
   zoomOut: false,
   shapeSettings: {
     geometryShape: 'sphere',
@@ -40,6 +41,13 @@ const settingsReducerDefaultState = {
 
 export default (state = settingsReducerDefaultState, action) => {
   switch (action.type) {
+
+    case 'SET_FULLSCREEN_MODE':
+      return {
+        ...state,
+        fullscreenMode: action.fullscreenMode
+      }
+      break;
 
     case 'SET_ZOOM_OUT':
       return {

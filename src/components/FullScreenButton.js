@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import { IconToggle } from 'rmwc/IconToggle';
 import '@material/icon-toggle/dist/mdc.icon-toggle.min.css';
+import {setFullScreenMode} from '../actions/settings';
 
 class FullScreenButton extends React.Component{
 
@@ -10,9 +12,6 @@ class FullScreenButton extends React.Component{
 
     this.onFullscreenToggle = this.onFullscreenToggle.bind(this);
 
-    this.state = {
-      fullscreen: false
-    }
   }
 
   onFullscreenToggle(){
@@ -29,9 +28,9 @@ class FullScreenButton extends React.Component{
 
       // Lock screen to landscape
       window.screen.orientation.lock('landscape-primary');
-      this.setState( () => ({
-        fullscreen: true
-      }));
+      this.props.dispatch(
+        setFullScreenMode(true)
+      );
     }
 
     // Cancel full screen
@@ -42,9 +41,9 @@ class FullScreenButton extends React.Component{
       cancelFullScreen.call(doc);
       window.screen.orientation.unlock();
 
-      this.setState( () => ({
-        fullscreen: false
-      }));
+      this.props.dispatch(
+        setFullScreenMode(false)
+      );
     }
   }
 
@@ -53,10 +52,10 @@ class FullScreenButton extends React.Component{
       <IconToggle className="fullscreen__toggle"
         on={{label: 'Exit fullscreen', content: 'fullscreen_exit'}}
         off={{label: 'Enter fullscreen', content: 'fullscreen'}}
-        checked={this.state.fullscreen}
+        checked={this.props.fullscreenMode}
         onChange={this.onFullscreenToggle} />
     )
   }
 }
 
-export default FullScreenButton;
+export default connect()(FullScreenButton);

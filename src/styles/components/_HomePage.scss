@@ -2,8 +2,15 @@ body{
   margin: 0;
 }
 
-.ui__openMenuButton{
+.ui__openMenuButton, .fullscreen__toggle{
+  color: $bg-color;
+  font-size: 30px;
+  margin: 20px;
   position: fixed;
+}
+
+.fullscreen__toggle{
+  right: 0px;
 }
 
 .ui__container{
@@ -12,11 +19,6 @@ body{
   max-height: 100%;
   overflow-y: auto;
   position: fixed;
-}
-
-.fullscreen__toggle{
-  position: fixed;
-  right: 0px;
 }
 
 .ui__tabbar{
