@@ -28,12 +28,20 @@ const SortableItem = SortableElement(({shader, uniforms}) => {
 
 const SortableList = SortableContainer(({shaders}) => {
   return (
-    <div>
+    <div className="shader__container">
+      <div className="shaderList__message">
+        <Icon className="shaderList__orderIcon" strategy="ligature" use="videocam" />
+        <p>Move shaders up here to place them early in the render process</p>
+      </div>
       <ul className="shaderList__container">
         {Object.keys(shaders).map((shader, index) => (
           <SortableItem key={`item-${index}`} index={index} shader={shader} uniforms={shaders[shader]}/>
         ))}
       </ul>
+      <div className="shaderList__message">
+        <Icon className="shaderList__orderIcon" strategy="ligature" use="visibility" />
+        <p>Move shaders down here to place them late in the render process</p>
+      </div>
     </div>
   );
 });
@@ -42,6 +50,7 @@ class SortableShaderList extends Component {
   constructor(props){
     super(props);
     this.state = {
+      movingItem: false,
       shaders: this.props.shaders,
     };
   }
@@ -73,7 +82,10 @@ class SortableShaderList extends Component {
   };
 
   render() {
-    return <SortableList shaders={this.state.shaders} onSortEnd={this.onSortEnd}
+    return <SortableList
+            shaders={this.state.shaders}
+            moving={this.state.movingItem}
+            onSortEnd={this.onSortEnd}
             useDragHandle={true}/>;
   }
 }

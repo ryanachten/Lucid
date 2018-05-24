@@ -1,3 +1,19 @@
+.shader__container{
+  margin-bottom: 20px;
+}
+
+.shaderList__message{
+  text-align: center;
+  background: #FFBAC3;
+  font-size: 0.7rem;
+  padding: 10px;
+  opacity: 0.5;
+
+  p{
+    margin: 0;
+  }
+}
+
 .shaderList__container{
   list-style: none;
   padding-left: 0;
@@ -20,6 +36,7 @@
   flex-flow: row wrap;
   margin-bottom: 20px;
   padding: 10px;
+  z-index: 4;
 }
 
 .shaderItem__content{
