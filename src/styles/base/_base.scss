@@ -1,3 +1,16 @@
+html{
+  overflow: hidden; //used to prevent scrolls affecting render sizes
+}
+
+body{
+  margin: 0;
+}
+
+* {
+  font-family: $body-type;
+}
+
+
 #stats-graph{
   bottom: 0 !important;
   left: unset !important;
@@ -6,8 +19,4 @@
 }
 #video__container{
   display: none;
-}
-
-* {
-  font-family: $body-type;
 }
