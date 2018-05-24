@@ -49,9 +49,6 @@ const SortableList = SortableContainer(({shaders}) => {
 class SortableShaderList extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      movingItem: false
-    };
   }
 
   onSortEnd = ({oldIndex, newIndex}) => {
@@ -63,7 +60,6 @@ class SortableShaderList extends Component {
     newShaderKeys.map( (shader) => {
       newShaderOrder[shader] = this.props.allShaders[shader];
     });
-    console.log(newShaderOrder);
     this.props.dispatch(
       updateAllShaderOrder(newShaderOrder)
     );
@@ -84,7 +80,6 @@ class SortableShaderList extends Component {
   render() {
     return <SortableList
             shaders={this.props.allShaders}
-            moving={this.state.movingItem}
             onSortEnd={this.onSortEnd}
             useDragHandle={true}/>;
   }
