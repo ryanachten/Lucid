@@ -20,7 +20,7 @@ class ThreeProject extends React.Component {
     this.handleActiveShaders = this.handleActiveShaders.bind(this);
 
     this.state = {
-      orientation: undefined,
+      orientation: {},
       allShaderPasses: undefined
     };
   }
