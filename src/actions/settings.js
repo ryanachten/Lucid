@@ -56,9 +56,16 @@ export const removeActiveShader = (shader) => {
   }
 }
 
-export const updateShaderOrder = (shaders) => {
+export const updateAllShaderOrder = (shaders) => {
   return{
-    type: 'UPDATE_SHADER_ORDER',
+    type: 'UPDATE_ALL_SHADER_ORDER',
+    shaders
+  }
+}
+
+export const updateActiveShaderOrder = (shaders) => {
+  return{
+    type: 'UPDATE_ACTIVE_SHADER_ORDER',
     shaders
   }
 }

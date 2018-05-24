@@ -6,7 +6,7 @@ import { SortableContainer, SortableElement, SortableHandle,
 import $ from 'jquery';
 import { Icon } from 'rmwc/Icon';
 
-import { updateShaderOrder } from '../actions/settings';
+import { updateAllShaderOrder, updateActiveShaderOrder } from '../actions/settings';
 
 import ShaderItem from './ShaderItem';
 
@@ -50,23 +50,23 @@ class SortableShaderList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      movingItem: false,
-      shaders: this.props.shaders,
+      movingItem: false
     };
   }
 
   onSortEnd = ({oldIndex, newIndex}) => {
     // Assigns reordered keys to new obj
     // and copys over existing uniform vals
-    const shadersKeys = Object.keys(this.state.shaders);
+    const shadersKeys = Object.keys(this.props.allShaders);
     const newShaderKeys = arrayMove(shadersKeys, oldIndex, newIndex);
     const newShaderOrder = {};
     newShaderKeys.map( (shader) => {
-      newShaderOrder[shader] = this.state.shaders[shader];
+      newShaderOrder[shader] = this.props.allShaders[shader];
     });
-    this.setState({
-      shaders: newShaderOrder,
-    });
+    console.log(newShaderOrder);
+    this.props.dispatch(
+      updateAllShaderOrder(newShaderOrder)
+    );
 
     // Checks if reorded keys are present in active shaders
     // if so, adds them to new reordered obj to send to store
@@ -77,13 +77,13 @@ class SortableShaderList extends Component {
       }
     });
     this.props.dispatch(
-      updateShaderOrder(newActiveShaders)
+      updateActiveShaderOrder(newActiveShaders)
     );
   };
 
   render() {
     return <SortableList
-            shaders={this.state.shaders}
+            shaders={this.props.allShaders}
             moving={this.state.movingItem}
             onSortEnd={this.onSortEnd}
             useDragHandle={true}/>;

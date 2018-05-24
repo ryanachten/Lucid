@@ -117,7 +117,7 @@ class HomePage extends React.Component{
               )}
 
               { this.state.activeTabIndex === 2 && (
-                <SortableShaderList shaders={this.props.allShaders}/>
+                <SortableShaderList allShaders={this.props.allShaders}/>
               )}
             </div>
           </div>
@@ -148,7 +148,7 @@ const mapStateToProps = (settings) => {
     rotateTexture: settings.textureSettings.rotateTexture,
     rotateTextureX: settings.textureSettings.rotateX,
     rotateTextureY: settings.textureSettings.rotateY,
-    allShaders: settings.shaderSettings.defaultShaderUniforms,
+    allShaders: settings.shaderSettings.allShadersAndDefaults,
     activeShaders: settings.shaderSettings.activeShaders
   }
 };

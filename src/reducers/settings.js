@@ -12,7 +12,7 @@ const settingsReducerDefaultState = {
   },
   shaderSettings: {
     activeShaders: undefined,
-    defaultShaderUniforms:{
+    allShadersAndDefaults:{
       kalei: {
         sides: { min: 0.1, max: 20, default: 6 }
       },
@@ -146,7 +146,18 @@ export default (state = settingsReducerDefaultState, action) => {
       }
       break;
 
-    case 'UPDATE_SHADER_ORDER':
+    case 'UPDATE_ALL_SHADER_ORDER':
+      shaderSettings = state.shaderSettings;
+      return {
+        ...state,
+        shaderSettings: {
+          ...shaderSettings,
+          allShadersAndDefaults: action.shaders
+        }
+      }
+      break;
+
+    case 'UPDATE_ACTIVE_SHADER_ORDER':
       shaderSettings = state.shaderSettings;
       return {
         ...state,
