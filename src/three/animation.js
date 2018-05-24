@@ -24,9 +24,9 @@ function animate({
   }
   // If on a desktop / device w/ no orientation; animate
   else {
-    shape.rotation.x += 0.01;
-    shape.rotation.y += 0.01;
-    shape.rotation.z += 0.01;
+    shape.rotation.x += 0.005;
+    shape.rotation.y += 0.005;
+    shape.rotation.z += 0.005;
   }
 
   if (rotateTexture) {
