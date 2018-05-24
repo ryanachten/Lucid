@@ -11,8 +11,6 @@ import { TabBar, Tab, TabIcon,
 import '@material/tabs/dist/mdc.tabs.min.css';
 
 import ThreeProject from './ThreeProject';
-import LoadingScreen from './LoadingScreen';
-
 import FullScreenButton from './FullScreenButton';
 import SortableShaderList from './SortableShaderList';
 import ShapeSettings from './ShapeSettings';
