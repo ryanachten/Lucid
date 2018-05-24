@@ -23,7 +23,7 @@ function animate({
     shape.rotation.z = beta;
   }
   // If on a desktop / device w/ no orientation; animate
-  else{
+  else if(!orientation) {
     shape.rotation.x += 0.01;
     shape.rotation.y += 0.01;
     shape.rotation.z += 0.01;
