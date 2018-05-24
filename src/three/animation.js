@@ -49,7 +49,7 @@ function animate({
   composer.render();
 
   renderer.setScissor( size.width / 2, 0, size.width / 2, size.height );
-  renderer.setViewport( window.innerWidth / 2, 0, size.width / 2, size.height);
+  renderer.setViewport( size.width / 2, 0, size.width / 2, size.height);
   renderPass.camera = stereoCamera.cameraR;
   composer.render();
 

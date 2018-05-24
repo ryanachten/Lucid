@@ -57,13 +57,18 @@ class ThreeProject extends React.Component {
   }
 
   onWindowResize(){
-    const {camera, renderer} = this.state;
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const {camera, renderer, stereoCamera} = this.state;
+    const canvasWidth = $(window).innerWidth();
+    const canvasHeight = $(window).innerHeight();
+
+    camera.aspect = canvasWidth / canvasHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( canvasWidth, canvasHeight );
     this.setState( () => ({
+      canvasWidth, canvasHeight,
       camera, renderer
     }));
+
   }
 
   getDeviceOrientation(e){

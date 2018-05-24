@@ -45,7 +45,7 @@ class HomePage extends React.Component{
   render = () => {
 
     return(
-      <div>
+      <div className="homepage__container">
         <FullScreenButton
           fullscreenMode={this.props.fullscreenMode}
         />
