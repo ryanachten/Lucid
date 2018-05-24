@@ -72,8 +72,6 @@ class ThreeProject extends React.Component {
   }
 
   getDeviceOrientation(e){
-    console.log('orientation e', e);
-    console.log('this.state.orientation', this.state.orientation);
     if (e.absolute) {
       const orientation = this.state.orientation;
       orientation.absolute = e.absolute;
