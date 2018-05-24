@@ -48,6 +48,7 @@ class TextureSettings extends React.Component{
         <div>
           <span>Rotate Texture</span>
           <Switch className="texture__rotateSwitch"
+            checked={this.props.rotateTexture}
             onChange={this.onRotateTexture} />
         </div>
           { this.props.rotateTexture && (
