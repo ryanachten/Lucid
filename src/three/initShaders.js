@@ -7,6 +7,7 @@ import HueSaturationShader from '../shaders/HueSaturationShader';
 import BrightnessContrastShader from '../shaders/BrightnessContrastShader';
 import DigitalGlitch from '../shaders/DigitalGlitch';
 import FocusShader from '../shaders/FocusShader';
+import MirrorShader from '../shaders/MirrorShader';
 
 const getShaderPasses = () => {
   THREE.BadTVShader = BadTVShader;
@@ -16,6 +17,7 @@ const getShaderPasses = () => {
   THREE.BrightnessContrastShader = BrightnessContrastShader;
   THREE.DigitalGlitch = DigitalGlitch;
   THREE.FocusShader = FocusShader;
+  THREE.MirrorShader = MirrorShader;
   const badTVPass = new ShaderPass( THREE.BadTVShader );
   const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
   const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
@@ -23,6 +25,7 @@ const getShaderPasses = () => {
   const brightnessContrastPass = new ShaderPass( THREE.BrightnessContrastShader );
   const digitalGlitchPass = new ShaderPass( THREE.DigitalGlitch );
   const focusShaderPass = new ShaderPass( THREE.FocusShader );
+  const mirrorShaderPass = new ShaderPass( THREE.MirrorShader );
 
   const shaderPasses = {
     kalei: kaleidoPass,
@@ -31,7 +34,8 @@ const getShaderPasses = () => {
     hueSaturation: hueSaturationPass,
     brightnessContrast: brightnessContrastPass,
     digitalGlitch: digitalGlitchPass,
-    focusShader: focusShaderPass
+    focus: focusShaderPass,
+    mirror: mirrorShaderPass,
   };
 
   return shaderPasses;

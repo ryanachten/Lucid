@@ -14,7 +14,8 @@ const settingsReducerDefaultState = {
     activeShaders: undefined,
     allShadersAndDefaults:{
       kalei: {
-        sides: { min: 0.1, max: 20, default: 6 }
+        sides: { min: 0.1, max: 20, default: 6 },
+        angle: { min: 0, max: (Math.PI*2), default: 0.0 }
       },
       badTv: {
         time: { min: 0.0, max: 10.0, default: 0.0 },
@@ -43,9 +44,12 @@ const settingsReducerDefaultState = {
         'distortion_y': {min: 0, max: 1, default: 0.6 },
         'col_s': {min: 0, max: 1, default: 0.5 }
       },
-      focusShader: {
+      focus: {
         'sampleDistance': {min: 0, max: 2, default: 0.94 },
         'waveFactor': {min: 0, max: 1, default: 0.00125 }
+      },
+      mirror: {
+        'side': {min: 0, max: 3, default: 1 },
       }
     }
   }
