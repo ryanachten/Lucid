@@ -1,6 +1,10 @@
 {
   "name": "boilerplate",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.4.0",
+    "npm": "5.3.x"
+  },
   "main": "index.js",
   "author": "Ryan Achten <ryanachten@gmail.com>",
   "license": "MIT",
