@@ -34,6 +34,14 @@ const settingsReducerDefaultState = {
       brightnessContrast: {
         brightness: { min: -1, max: 1, default: 0 },
         contrast: { min: -1, max: 1, default: 0.5 }
+      },
+      digitalGlitch: {
+        'amount': {min: 0, max: 1, default: 0.08 },
+        'angle': {min: 0, max: (Math.PI*2), default: 0.02 },
+        'seed': {min: 0, max: 1, default: 0.02 },
+        'distortion_x': {min: 0, max: 1, default: 0.5 },
+        'distortion_y': {min: 0, max: 1, default: 0.6 },
+        'col_s': {min: 0, max: 1, default: 0.5 }
       }
     }
   }
