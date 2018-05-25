@@ -36,12 +36,16 @@ const settingsReducerDefaultState = {
         contrast: { min: -1, max: 1, default: 0.5 }
       },
       digitalGlitch: {
-        'amount': {min: 0, max: 1, default: 0.08 },
+        'amount': {min: 0, max: 0.5, default: 0 },
         'angle': {min: 0, max: (Math.PI*2), default: 0.02 },
         'seed': {min: 0, max: 1, default: 0.02 },
         'distortion_x': {min: 0, max: 1, default: 0.5 },
         'distortion_y': {min: 0, max: 1, default: 0.6 },
         'col_s': {min: 0, max: 1, default: 0.5 }
+      },
+      focusShader: {
+        'sampleDistance': {min: 0, max: 2, default: 0.94 },
+        'waveFactor': {min: 0, max: 1, default: 0.00125 }
       }
     }
   }

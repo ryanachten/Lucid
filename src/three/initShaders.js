@@ -6,6 +6,7 @@ import RGBShiftShader from '../shaders/RGBShiftShader';
 import HueSaturationShader from '../shaders/HueSaturationShader';
 import BrightnessContrastShader from '../shaders/BrightnessContrastShader';
 import DigitalGlitch from '../shaders/DigitalGlitch';
+import FocusShader from '../shaders/FocusShader';
 
 const getShaderPasses = () => {
   THREE.BadTVShader = BadTVShader;
@@ -14,12 +15,14 @@ const getShaderPasses = () => {
   THREE.HueSaturationShader = HueSaturationShader;
   THREE.BrightnessContrastShader = BrightnessContrastShader;
   THREE.DigitalGlitch = DigitalGlitch;
+  THREE.FocusShader = FocusShader;
   const badTVPass = new ShaderPass( THREE.BadTVShader );
   const kaleidoPass = new ShaderPass( THREE.KaleidoShader );
   const rgbShiftPass = new ShaderPass( THREE.RGBShiftShader );
   const hueSaturationPass = new ShaderPass( THREE.HueSaturationShader );
   const brightnessContrastPass = new ShaderPass( THREE.BrightnessContrastShader );
-  const digitalGlitch = new ShaderPass( THREE.DigitalGlitch );
+  const digitalGlitchPass = new ShaderPass( THREE.DigitalGlitch );
+  const focusShaderPass = new ShaderPass( THREE.FocusShader );
 
   const shaderPasses = {
     kalei: kaleidoPass,
@@ -27,7 +30,8 @@ const getShaderPasses = () => {
     rgbShift: rgbShiftPass,
     hueSaturation: hueSaturationPass,
     brightnessContrast: brightnessContrastPass,
-    digitalGlitch: digitalGlitch
+    digitalGlitch: digitalGlitchPass,
+    focusShader: focusShaderPass
   };
 
   return shaderPasses;
