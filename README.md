@@ -1,7 +1,7 @@
 # Lucid
 ## Mixed-Reality Psychedelia
 
-![Header img](https://mir-s3-cdn-cf.behance.net/project_modules/1400/b4f4de66084939.5b0b66a5d66b6.jpg)
+![Header img](https://mir-s3-cdn-cf.behance.net/project_modules/1400/1f62fd66084939.5b0ba1beb3942.jpg)
 
 ## Lucid?
 A mixed-reality application which allows users to design and experience psychedelic visualisations through their browser and virtual-reality headsets.
